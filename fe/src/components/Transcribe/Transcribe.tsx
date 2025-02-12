@@ -7,7 +7,7 @@ import { startRecording, stopRecording } from "../../store/recorderSlice"; // Im
 
 const Transcribe: React.FC = () => {
     const [record, setRecord] = useState(false);
-    const [audio, setAudio] = useState<string | null>(null);
+    const [audio, setAudio] = useState<Blob | null>(null);
     const dispatch = useDispatch<AppDispatch>(); // Redux dispatch
 
     const handleStartRecording = () => {
@@ -29,9 +29,28 @@ const Transcribe: React.FC = () => {
         const audioUrl = URL.createObjectURL(recordedBlob.blob);
         const audio = new Audio(audioUrl);
         audio.play();
-        setAudio(recordedBlob.blobURL);
+        setAudio(recordedBlob.blob);
+        postAudio();
     };
-
+    
+    const postAudio = async () => {
+        console.log('Posting audio...');
+        if (audio) {
+            const formData = new FormData();
+            formData.append('audio', audio, 'recording.wav');
+            try {
+                const response = await fetch('http://localhost:5000/transcribe', {
+                    method: 'POST',
+                    body: formData,
+                });
+                const data = await response.json();
+                console.log('Transcription:', data.transcription);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    };
+    
     return (
         <div className="w-250 h-200 rounded-[20px] bg-[#FCFCFC]">
             <div className="w-full h-16 bg-[#C9DEFF] border-3 border-white border-b-0 rounded-t-[20px] flex">
