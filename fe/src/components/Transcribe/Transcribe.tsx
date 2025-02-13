@@ -4,10 +4,11 @@ import { RecordedBlob } from './types';
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { startRecording, stopRecording } from "../../store/recorderSlice"; 
-import { postAudio } from "./hooks.ts"; 
+import { useAudioTranscription } from "./hooks.ts";
 
 const Transcribe: React.FC = () => {
-
+    
+    const { postAudio } = useAudioTranscription();
     const [record, setRecord] = useState(false);
     const dispatch = useDispatch<AppDispatch>(); 
 

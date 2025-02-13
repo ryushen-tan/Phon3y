@@ -1,21 +1,36 @@
-export const postAudio = async (audio: Blob | null): Promise<void> => {
-    if (audio) {
-        try {
-            const wavBlob = await convertWebMToWav(audio);
-            const formData = new FormData();
-            formData.append('audio', wavBlob, 'recording.wav');
+import { useState } from 'react';
 
-            const response = await fetch('http://localhost:5000/transcribe', {
-                method: 'POST',
-                body: formData
-            });
+export const useAudioTranscription = () => {
+    const [transcription, setTranscription] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
-            const data: { transcription: string } = await response.json();
-            console.log('Transcription:', data.transcription);
-        } catch (error) {
-            console.error('Error:', error);
+    const postAudio = async (audio: Blob | null): Promise<void> => {
+        if (audio) {
+            try {
+                const wavBlob = await convertWebMToWav(audio);
+                const formData = new FormData();
+                formData.append('audio', wavBlob, 'recording.wav');
+
+                const response = await fetch('http://localhost:5000/transcribe', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data: { transcription: string } = await response.json();
+                setTranscription(data.transcription);
+                alert("successefully transcribed audio");
+            } catch (err: unknown) {
+                if (err instanceof Error) {
+                    setError('Error: ' + err.message);
+                } else {
+                    setError('An unknown error occurred');
+                }
+                console.error('Error:', err);
+            }
         }
-    }
+    };
+
+    return { transcription, error, postAudio };
 };
 
 // Function to convert WebM blob to WAV

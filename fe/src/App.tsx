@@ -16,10 +16,13 @@ function App() {
           </div>
           <div className='flex flex-col gap-3'>
             <Camera />
-            <div className='flex gap-3 w-240'>
-              <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
-              <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
-              <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
+            <div className="w-240 overflow-x-auto">
+              <div className="flex gap-3 w-max">
+                <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
+                <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
+                <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
+                <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
+              </div>
             </div>
           </div>
         </div>
