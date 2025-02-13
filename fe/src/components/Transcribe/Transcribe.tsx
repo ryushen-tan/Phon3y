@@ -4,10 +4,9 @@ import { RecordedBlob } from './types';
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { startRecording, stopRecording } from "../../store/recorderSlice"; // Import actions
-
+import { postAudio } from "./hooks.ts"; // Import API function
 const Transcribe: React.FC = () => {
     const [record, setRecord] = useState(false);
-    const [audio, setAudio] = useState<Blob | null>(null);
     const dispatch = useDispatch<AppDispatch>(); // Redux dispatch
 
     const handleStartRecording = () => {
@@ -27,28 +26,10 @@ const Transcribe: React.FC = () => {
     const onStop = (recordedBlob: RecordedBlob) => {
         console.log('Recorded blob:', recordedBlob);
         const audioUrl = URL.createObjectURL(recordedBlob.blob);
-        const audio = new Audio(audioUrl);
-        audio.play();
-        setAudio(recordedBlob.blob);
-        postAudio();
-    };
-    
-    const postAudio = async () => {
-        console.log('Posting audio...');
-        if (audio) {
-            const formData = new FormData();
-            formData.append('audio', audio, 'recording.wav');
-            try {
-                const response = await fetch('http://localhost:5000/transcribe', {
-                    method: 'POST',
-                    body: formData,
-                });
-                const data = await response.json();
-                console.log('Transcription:', data.transcription);
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
+        const audioPlay = new Audio(audioUrl);
+        audioPlay.play();
+        postAudio(recordedBlob.blob);
+        console.log('Audio blob:', recordedBlob.blob);
     };
     
     return (
