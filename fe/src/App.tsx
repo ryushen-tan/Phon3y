@@ -1,6 +1,6 @@
 import Transcribe from './components/Transcribe/Transcribe';
 import Navbar from './components/Navbar/Navbar';
-import Footer from './components/Footer/Footer';
+// import Footer from './components/Footer/Footer'; // gonna fix this up in the future
 import Camera from './components/Camera/Camera';
 import GalleryCard from './components/Gallery/GalleryCard';
 function App() {
