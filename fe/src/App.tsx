@@ -2,6 +2,7 @@ import Transcribe from './components/Transcribe/Transcribe';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Camera from './components/Camera/Camera';
+import GalleryCard from './components/Gallery/GalleryCard';
 function App() {
 
   return (
@@ -13,8 +14,13 @@ function App() {
           <div className=''>
             <Transcribe />
           </div>
-          <div>
+          <div className='flex flex-col gap-3'>
             <Camera />
+            <div className='flex gap-3 w-240'>
+              <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
+              <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
+              <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
+            </div>
           </div>
         </div>
         </div>

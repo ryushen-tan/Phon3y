@@ -1,8 +1,5 @@
 export const postAudio = async (audio: Blob | null): Promise<void> => {
-    console.log('Posting audio...');
-    console.log(audio, "audio");
     if (audio) {
-        console.log('hi');
         try {
             const wavBlob = await convertWebMToWav(audio);
             const formData = new FormData();
@@ -11,7 +8,6 @@ export const postAudio = async (audio: Blob | null): Promise<void> => {
             const response = await fetch('http://localhost:5000/transcribe', {
                 method: 'POST',
                 body: formData
-                // Removed mode: 'no-cors'
             });
 
             const data: { transcription: string } = await response.json();

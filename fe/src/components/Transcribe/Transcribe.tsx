@@ -3,20 +3,22 @@ import { ReactMic } from 'react-mic';
 import { RecordedBlob } from './types';
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
-import { startRecording, stopRecording } from "../../store/recorderSlice"; // Import actions
-import { postAudio } from "./hooks.ts"; // Import API function
+import { startRecording, stopRecording } from "../../store/recorderSlice"; 
+import { postAudio } from "./hooks.ts"; 
+
 const Transcribe: React.FC = () => {
+
     const [record, setRecord] = useState(false);
-    const dispatch = useDispatch<AppDispatch>(); // Redux dispatch
+    const dispatch = useDispatch<AppDispatch>(); 
 
     const handleStartRecording = () => {
         setRecord(true);
-        dispatch(startRecording()); // Update Redux state
+        dispatch(startRecording());
     };
 
     const handleStopRecording = () => {
         setRecord(false);
-        dispatch(stopRecording()); // Update Redux state
+        dispatch(stopRecording());
     };
 
     const onData = (recordedData: Blob) => {
