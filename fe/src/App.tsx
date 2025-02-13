@@ -28,7 +28,7 @@ function App() {
         </div>
         </div>
         <div className='absolute bottom-0 w-screen'>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
     </>
