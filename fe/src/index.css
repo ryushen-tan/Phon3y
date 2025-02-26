@@ -8,3 +8,15 @@
 body{
     font-family: 'Poppins', sans-serif;
 }
+
+@font-face {
+    font-family: 'Harabara';
+    src: url('/fonts/Harabara.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font-harabara {
+    font-family: 'Harabara', sans-serif;
+}
+

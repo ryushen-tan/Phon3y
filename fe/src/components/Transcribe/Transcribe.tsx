@@ -36,7 +36,7 @@ const Transcribe: React.FC = () => {
     };
     
     return (
-        <div className="w-250 h-200 rounded-[20px] bg-[#FCFCFC]">
+        <div className="w-[45vw] h-200 rounded-[20px] bg-[#FCFCFC]">
             <div className="w-full h-16 bg-[#C9DEFF] border-3 border-white border-b-0 rounded-t-[20px] flex">
                 <input
                     placeholder="untitled recording"
