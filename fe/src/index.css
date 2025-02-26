@@ -20,3 +20,34 @@ body{
     font-family: 'Harabara', sans-serif;
 }
 
+:root {
+    --fade-in-duration: 1s; /* default duration */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.fade-in {
+    animation: fadeIn var(--fade-in-duration) ease-in-out;
+}
+
+.fade-in-1 {
+    --fade-in-duration: 1s;
+}
+.fade-in-2 {
+    --fade-in-duration: 2s;
+}
+.fade-in-3 {
+    --fade-in-duration: 3s;
+}
+
+@layer utilities {
+    .animate-fade-in {
+        animation: fadeIn var(--fade-in-duration, 1s) ease-in-out;
+    }
+}
