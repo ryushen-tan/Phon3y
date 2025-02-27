@@ -10,6 +10,7 @@ const LandingPage: React.FC = () => {
         <> 
             <Navbar />
             <div className='overflow-x-hidden'>
+
                 <div
                     className="flex flex-col items-center h-[130vw] w-screen bg-cover bg-center"
                     style={{
@@ -19,7 +20,7 @@ const LandingPage: React.FC = () => {
                 >
                     <div className='w-screen h-screen flex items-center flex-col'>
                         <img className="absolute w-[1111px] top-45 z-[1]" src={background} alt="background 3D assets" />
-                        <div className="relative z-10 flex justify-center items-center h-[100%] w-full">
+                        <div className="relative z-[1] flex justify-center items-center h-[100%] w-full">
                             <div className="w-[700px] h-[400px] bg-black/10 bg-blur-xl rounded-[65px] border-1 border-gray-400 backdrop-blur-xl flex flex-col justify-center items-center fade-in">
                                 <div className='w-[81px] h-[16px] rounded-[10px] bg-[#D9D9D9] flex justify-center items-center'>
                                     <div className='w-[70px] h-[12px] rounded-[10px] bg-[#FFFFFF] flex justify-center items-center'>
@@ -30,7 +31,7 @@ const LandingPage: React.FC = () => {
                                     Speech to <span className='text-white'>Phonetics</span> In Seconds
                                 </h1>
                                 <p className='text-white w-[35%] text-center text-[12px] font-poppins mt-5'>Transcribe speech into phonetics, analyze important data, all in one place.</p>
-                                <button className='w-[110px] h-[38px] rounded-[10px] bg-gradient-to-r from-[#999999] to-[#666666] mt-5 flex justify-center items-center hover:opacity-[80%] hover:cursor-pointer'>
+                                <button className='w-[110px] h-[38px] rounded-[10px] bg-gradient-to-r border-2 border-white from-[#999999] to-[#666666] mt-5 flex justify-center items-center hover:opacity-[80%] hover:cursor-pointer'>
                                     <ShinyText text="Get Started" disabled={false} className="text-[12px] text-white" speed={2} />
                                 </button>
                             </div>
