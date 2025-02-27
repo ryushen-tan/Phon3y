@@ -4,6 +4,7 @@ import background from '/background.png';
 import ShinyText from '../components/Text/ShinyText';
 import Footer from '../components/Footer/Footer';
 import Demo from '/demo.png';
+import { Link } from 'react-router-dom';
 
 const LandingPage: React.FC = () => {
     return (
@@ -31,9 +32,12 @@ const LandingPage: React.FC = () => {
                                     Speech to <span className='text-white'>Phonetics</span> In Seconds
                                 </h1>
                                 <p className='text-white w-[35%] text-center text-[12px] font-poppins mt-5'>Transcribe speech into phonetics, analyze important data, all in one place.</p>
-                                <button className='w-[130px] h-[38px] rounded-[10px] bg-gradient-to-r border-2 border-white from-[#999999] to-[#666666] mt-5 flex justify-center items-center hover:opacity-[80%] hover:cursor-pointer'>
-                                    <ShinyText text="Get Started" disabled={false} className="text-[12px] text-white" speed={2} />
-                                </button>
+                                <Link to="/guest/transcribe">
+                                    <button className='w-[130px] h-[38px] rounded-[10px] bg-gradient-to-r border-2 border-white from-[#999999] to-[#666666] mt-5 flex justify-center items-center hover:opacity-[80%] hover:cursor-pointer'>
+                                        <ShinyText text="Get Started" disabled={false} className="text-[12px] font-medium text-white" speed={2} />
+                                    </button>
+                                </Link>
+
                             </div>
                         </div>
                     </div>
