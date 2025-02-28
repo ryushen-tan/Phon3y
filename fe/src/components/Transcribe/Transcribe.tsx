@@ -8,7 +8,7 @@ import { useAudioTranscription } from "./hooks.ts";
 
 const Transcribe: React.FC = () => {
     
-    const { postAudio } = useAudioTranscription();
+    const { postAudio, transcription } = useAudioTranscription();
     const [record, setRecord] = useState(false);
     const dispatch = useDispatch<AppDispatch>(); 
 
@@ -43,7 +43,7 @@ const Transcribe: React.FC = () => {
                     className="text-[#4780CC] text-[18px] z-[1] focus:outline-none py-3 pl-12 w-[25%] placeholder:text-[#4780CC]"
                 />
             </div>
-            <div className="p-12 text-lg text-[#4F4F4F] font-light w-full h-160"></div>
+            <div className="p-12 text-lg text-[#4F4F4F] font-light w-full h-160">{transcription}</div>
             <div className="flex w-full justify-center items-center">
                 <ReactMic
                     className="hidden"

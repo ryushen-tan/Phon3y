@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar/Navbar';
 // import Footer from './components/Footer/Footer'; // gonna fix this up in the future
 import Camera from '../components/Camera/Camera';
 import GalleryCard from '../components/Gallery/GalleryCard';
+
 function TranscribePage() {
   return (
     <>
