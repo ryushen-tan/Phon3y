@@ -18,7 +18,6 @@ export const useAudioTranscription = () => {
 
                 const data: { transcription: string } = await response.json();
                 setTranscription(data.transcription);
-                alert("successefully transcribed audio");
             } catch (err: unknown) {
                 if (err instanceof Error) {
                     setError('Error: ' + err.message);
