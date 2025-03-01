@@ -43,8 +43,9 @@ const Transcribe: React.FC = () => {
                     className="text-[#4780CC] text-[18px] z-[1] focus:outline-none py-[1vw] pl-[2.8vw] w-[25%] placeholder:text-[#4780CC]"
                 />
             </div>
-            <div className="p-[3vw] text-lg text-[#4F4F4F] font-light w-full h-[31vw]">Phonetics:{transcription}</div>
-            <div className="flex w-full justify-center items-center">
+            <div className="p-[3vw] text-lg text-[#4F4F4F] font-light w-full h-[30vw]"><mark className='bg-blue-200 px-1 text-[#2b2b2b] rounded-md'>Phonetics:</mark> {transcription}</div>
+            <div className="flex flex-col w-full justify-center items-center gap-3">
+                <h1 className='font-poppins text-gray-500 font-light text-[12px]'>note: Please only start recording after button turns red.</h1>
                 <ReactMic
                     className="hidden"
                     record={record}
