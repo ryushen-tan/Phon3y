@@ -51,3 +51,8 @@ body{
         animation: fadeIn var(--fade-in-duration, 1s) ease-in-out;
     }
 }
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(50%) sepia(100%) saturate(500%) hue-rotate(200deg);
+    cursor: pointer;
+}

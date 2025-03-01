@@ -6,6 +6,7 @@ import { AppDispatch } from "../../store/store";
 import { startRecording, stopRecording } from "../../store/recorderSlice"; 
 import { useAudioTranscription } from "./hooks.ts";
 import SaveModal from '../Save/SavePopup.tsx';
+import { div } from 'framer-motion/client';
 
 const Transcribe: React.FC = () => {
     
@@ -16,11 +17,16 @@ const Transcribe: React.FC = () => {
     const [recording, setRecording] = useState<RecordedBlob | null>(null);
     const [recordingName, setRecordingName] = useState("untitiled recording");
     const [openSaveModal, setOpenSaveModal] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
     const dispatch = useDispatch<AppDispatch>(); 
 
     const handleStartRecording = () => {
         setRecord(true);
         dispatch(startRecording());
+    };
+
+    const handleEditing = () => {
+        setIsEditing(true);
     };
 
     const enableSaveOrDelete = () => {
@@ -62,12 +68,27 @@ const Transcribe: React.FC = () => {
     
     return (
         <div className="w-[45vw] h-[40vw] rounded-[20px] bg-[#FCFCFC]">
-            <div className="w-full h-[3.5vw] bg-[#C9DEFF] border-3 border-white border-b-0 rounded-t-[20px] flex">
+            <div className="w-full h-[3.5vw] bg-[#C9DEFF] border-3 border-white border-b-0 rounded-t-[20px] flex items-center">
                 <input
                     placeholder={recordingName}
                     onChange={(e) => setRecordingName(e.target.value)}
-                    className="text-[#4780CC] text-[18px] z-[1] focus:outline-none py-[1vw] pl-[2.8vw] w-[30%] placeholder:text-[#4780CC]"
+                    onFocus={() => setIsEditing(true)}
+                    className="text-[#4780CC] text-[18px] z-[1] focus:outline-none py-[1vw] pl-[2.8vw] w-[90%] placeholder:text-[#4780CC]"
                 />
+                <button 
+                    type="button" 
+                    onClick={() => document.querySelector('input')?.focus()}
+                    className="focus:outline-none ml-[-28.5vw]"
+                >
+                { !isEditing ? 
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.1123 4.95503L5.20978 13.8575C4.41478 14.66 2.03728 15.0275 1.45978 14.495C0.882284 13.9625 1.30227 11.585 2.09727 10.7825L10.9998 1.88005C11.4109 1.48856 11.9587 1.27328 12.5263 1.28019C13.0939 1.28711 13.6363 1.51568 14.0377 1.91708C14.4391 2.31848 14.6677 2.86091 14.6746 3.42852C14.6816 3.99614 14.4663 4.54397 14.0748 4.95503H14.1123Z" stroke="#7390B5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14.75 14.75H8" stroke="#4780CC" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                :
+                                <div className="flex justify-center items-center" />}
+
+                </button>
             </div>
             <div className="p-[3vw] text-lg text-[#4F4F4F] font-light w-full h-[28vw]">
             {enableSave && enableDelete ? (
