@@ -78,7 +78,7 @@ const Camera: React.FC = () => {
                 ref={videoRef} 
                 autoPlay 
                 playsInline 
-                className='rounded-xl w-240 h-100 bg-black transform scale-x-[-1] object-cover border-2 border-white'
+                className='rounded-xl w-[47vw] h-[20vw] bg-black transform scale-x-[-1] object-cover border-2 border-white'
             />
         </div>
     );

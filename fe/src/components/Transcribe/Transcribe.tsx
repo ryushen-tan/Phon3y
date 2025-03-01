@@ -36,14 +36,14 @@ const Transcribe: React.FC = () => {
     };
     
     return (
-        <div className="w-[45vw] h-200 rounded-[20px] bg-[#FCFCFC]">
-            <div className="w-full h-16 bg-[#C9DEFF] border-3 border-white border-b-0 rounded-t-[20px] flex">
+        <div className="w-[45vw] h-[40vw] rounded-[20px] bg-[#FCFCFC]">
+            <div className="w-full h-[3.5vw] bg-[#C9DEFF] border-3 border-white border-b-0 rounded-t-[20px] flex">
                 <input
                     placeholder="untitled recording"
-                    className="text-[#4780CC] text-[18px] z-[1] focus:outline-none py-3 pl-12 w-[25%] placeholder:text-[#4780CC]"
+                    className="text-[#4780CC] text-[18px] z-[1] focus:outline-none py-[1vw] pl-[2.8vw] w-[25%] placeholder:text-[#4780CC]"
                 />
             </div>
-            <div className="p-12 text-lg text-[#4F4F4F] font-light w-full h-160">{transcription}</div>
+            <div className="p-[3vw] text-lg text-[#4F4F4F] font-light w-full h-[31vw]">Phonetics:{transcription}</div>
             <div className="flex w-full justify-center items-center">
                 <ReactMic
                     className="hidden"
@@ -54,11 +54,11 @@ const Transcribe: React.FC = () => {
                     onData={onData}
                 />
                 <button 
-                    className="w-[75%] bg-[#4780CC] h-12 rounded-full flex justify-between items-center hover:cursor-pointer active:bg-[#42618B]" 
+                    className="w-[75%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-between items-center hover:cursor-pointer active:bg-red-500" 
                     onMouseDown={handleStartRecording} 
                     onMouseUp={handleStopRecording}
                 >
-                    <h2 className="text-white font-poppins text-[18px] font-semibold text-md mx-auto pl-8">Hold to Record</h2>
+                    <h2 className="text-white font-poppins text-[18px] font-semibold text-md mx-auto pl-[2vw]">Hold to Record</h2>
                     <div className="mr-4">
                         <svg
                             width="23"

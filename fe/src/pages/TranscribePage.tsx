@@ -10,13 +10,13 @@ function TranscribePage() {
       <div className='w-screen h-screen bg-[#F4F4F4]'>
         <Navbar />
         <div className='absolute bottom-8'>
-        <div className='w-screen flex justify-center gap-3'>
-          <div className=''>
+        <div className='w-screen flex md:flex-row flex-col justify-center gap-3'>
+          <div>
             <Transcribe />
           </div>
           <div className='flex flex-col gap-3'>
             <Camera />
-            <div className="w-240 overflow-x-auto">
+            <div className="w-[47vw] overflow-x-auto">
               <div className="flex gap-3 w-max">
                 <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
                 <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
