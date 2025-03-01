@@ -67,7 +67,7 @@ const Transcribe: React.FC = () => {
             <div className="p-[3vw] text-lg text-[#4F4F4F] font-light w-full h-[28vw]">
             {enableSave && enableDelete ? (
                 <div className='w-full h-full'>
-                    <mark className="bg-blue-200 px-1 text-[#2b2b2b] rounded-md">Phonetics:</mark> {transcription}
+                    <mark className="bg-blue-200 px-1 text-[#2b2b2b] rounded-md">Phonetics:</mark> { transcription ? transcription : "loading..."}
                 </div>
             ) : (
                 <div className='w-full h-full'>
