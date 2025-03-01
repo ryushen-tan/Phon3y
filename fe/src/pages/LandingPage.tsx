@@ -64,7 +64,7 @@ const LandingPage: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='w-screen h-[400px] bg-white mt-50'>
+                    <div className='w-screen h-[400px] mt-50 bg-black/10 bg-blur-xl border-1 border-gray-200 backdrop-blur-lg flex flex-col justify-center items-center'>
 
                     </div>
                     <div
@@ -73,7 +73,7 @@ const LandingPage: React.FC = () => {
                             isDemoVisible ? 'opacity-100' : 'opacity-0'
                         }`}
                     >
-                        <img src={Demo} alt="Demo Img" className='w-[60%] mt-100' />
+                        <img src={Demo} alt="Demo Img" className='w-[60%] mt-90' />
                     </div>
                 </div>
                 
