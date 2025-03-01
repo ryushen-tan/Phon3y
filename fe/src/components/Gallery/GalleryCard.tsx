@@ -12,6 +12,7 @@ const GalleryCard: React.FC<GalleryCardProps> = ({ title, description, date }) =
             </div>
             <div className="flex flex-col gap-[0.8vw] text-left h-full relative">
                 {/* <h3 className="gallery-card__title">{title}</h3>*/}
+                <h1>{title}</h1>
                 <p className="gallery-card__description">{description}</p> 
                 <div className='absolute bottom-0 right-0'>
                     <button className="rounded-full w-[2vw] h-[2vw] bg-[#C9DEFF] flex justify-center items-center text-center"></button>

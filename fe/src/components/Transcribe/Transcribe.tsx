@@ -10,6 +10,9 @@ const Transcribe: React.FC = () => {
     
     const { postAudio, transcription } = useAudioTranscription();
     const [record, setRecord] = useState(false);
+    const [enableSave, setEnableSave] = useState(false);
+    const [enableDelete, setEnableDelete] = useState(false);
+    const [recording, setRecording] = useState<RecordedBlob | null>(null);
     const dispatch = useDispatch<AppDispatch>(); 
 
     const handleStartRecording = () => {
@@ -17,9 +20,24 @@ const Transcribe: React.FC = () => {
         dispatch(startRecording());
     };
 
+    const enableSaveOrDelete = () => {
+        setEnableSave(true);
+        setEnableDelete(true);
+    };
+
+    const disableSaveOrDelete = () => {
+        setEnableSave(false);
+        setEnableDelete(false);
+    };
+
+    const onDelete = () => {
+        disableSaveOrDelete();
+    };
+
     const handleStopRecording = () => {
         setRecord(false);
         dispatch(stopRecording());
+        enableSaveOrDelete();
     };
 
     const onData = (recordedData: Blob) => {
@@ -30,9 +48,12 @@ const Transcribe: React.FC = () => {
         console.log('Recorded blob:', recordedBlob);
         const audioUrl = URL.createObjectURL(recordedBlob.blob);
         const audioPlay = new Audio(audioUrl);
+        setRecording(recordedBlob);
         audioPlay.play();
         postAudio(recordedBlob.blob);
-        console.log('Audio blob:', recordedBlob.blob);
+    };
+
+    const onSave = () => {
     };
     
     return (
@@ -40,10 +61,21 @@ const Transcribe: React.FC = () => {
             <div className="w-full h-[3.5vw] bg-[#C9DEFF] border-3 border-white border-b-0 rounded-t-[20px] flex">
                 <input
                     placeholder="untitled recording"
-                    className="text-[#4780CC] text-[18px] z-[1] focus:outline-none py-[1vw] pl-[2.8vw] w-[25%] placeholder:text-[#4780CC]"
+                    className="text-[#4780CC] text-[18px] z-[1] focus:outline-none py-[1vw] pl-[2.8vw] w-[30%] placeholder:text-[#4780CC]"
                 />
             </div>
-            <div className="p-[3vw] text-lg text-[#4F4F4F] font-light w-full h-[30vw]"><mark className='bg-blue-200 px-1 text-[#2b2b2b] rounded-md'>Phonetics:</mark> {transcription}</div>
+            <div className="p-[3vw] text-lg text-[#4F4F4F] font-light w-full h-[28vw]">
+            {enableSave && enableDelete ? (
+                <div className='w-full h-full'>
+                    <mark className="bg-blue-200 px-1 text-[#2b2b2b] rounded-md">Phonetics:</mark> {transcription}
+                </div>
+            ) : (
+                <div className='w-full h-full'>
+                    <mark className="bg-blue-200 px-1 text-[#2b2b2b] rounded-md">Phonetics:</mark>
+                </div>
+            )}
+
+            </div>
             <div className="flex flex-col w-full justify-center items-center gap-3">
                 <h1 className='font-poppins text-gray-500 font-light text-[12px]'>note: Please only start recording after button turns red.</h1>
                 <ReactMic
@@ -54,8 +86,32 @@ const Transcribe: React.FC = () => {
                     noiseSuppression={true}
                     onData={onData}
                 />
+                <div className='w-full flex justify-center items-center gap-3'>
+                    {
+                        enableSave && enableDelete && (
+                            <div className="flex w-[75%] justify-between items-center">
+                                <button 
+                                    className="w-[45%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-center items-center hover:cursor-pointer transition active:duration-300 active:ease-in active:bg-blue-500"
+                                    onClick={onSave}
+                                >
+                                    <h2 className="text-white font-poppins text-[18px] font-semibold text-md mx-auto">
+                                        Save
+                                    </h2>
+                                </button>
+                                <button 
+                                    className="w-[45%] bg-red-500 h-[2.5vw] rounded-full flex justify-center items-center hover:cursor-pointer transition active:delay-[800ms] active:duration-300 active:ease-in active:bg-blue-500"
+                                    onClick={onDelete}
+                                >
+                                    <h2 className="text-white font-poppins text-[18px] font-semibold text-md mx-auto">
+                                        Delete
+                                    </h2>
+                                </button>
+                            </div>
+                        )
+                    }
+                </div>
                 <button 
-                    className="w-[75%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-between items-center hover:cursor-pointer transition active:delay-[1000ms] active:duration-300 active:ease-in active:bg-red-500" 
+                    className="w-[75%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-between items-center hover:cursor-pointer transition active:delay-[800ms] active:duration-300 active:ease-in active:bg-red-500" 
                     onMouseDown={handleStartRecording} 
                     onMouseUp={handleStopRecording}
                 >

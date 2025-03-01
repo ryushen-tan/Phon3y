@@ -18,10 +18,10 @@ function TranscribePage() {
             <Camera />
             <div className="w-[47vw] overflow-x-auto">
               <div className="flex gap-3 w-max">
-                <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
-                <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
-                <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
-                <GalleryCard title="Test Card" date="January 1st, 2024" description="this is just a test" />
+                <GalleryCard title="Test Card" date="January 1st, 2024" description="" />
+                <GalleryCard title="Test Card" date="January 1st, 2024" description="" />
+                <GalleryCard title="Test Card" date="January 1st, 2024" description="" />
+                <GalleryCard title="Test Card" date="January 1st, 2024" description="" />
               </div>
             </div>
           </div>
