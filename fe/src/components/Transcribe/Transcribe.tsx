@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { startRecording, stopRecording } from "../../store/recorderSlice"; 
 import { useAudioTranscription } from "./hooks.ts";
+import SaveModal from '../Save/SavePopup.tsx';
 
 const Transcribe: React.FC = () => {
     
@@ -13,6 +14,8 @@ const Transcribe: React.FC = () => {
     const [enableSave, setEnableSave] = useState(false);
     const [enableDelete, setEnableDelete] = useState(false);
     const [recording, setRecording] = useState<RecordedBlob | null>(null);
+    const [recordingName, setRecordingName] = useState("untitiled recording");
+    const [openSaveModal, setOpenSaveModal] = useState(false);
     const dispatch = useDispatch<AppDispatch>(); 
 
     const handleStartRecording = () => {
@@ -54,13 +57,15 @@ const Transcribe: React.FC = () => {
     };
 
     const onSave = () => {
+        setOpenSaveModal(true);
     };
     
     return (
         <div className="w-[45vw] h-[40vw] rounded-[20px] bg-[#FCFCFC]">
             <div className="w-full h-[3.5vw] bg-[#C9DEFF] border-3 border-white border-b-0 rounded-t-[20px] flex">
                 <input
-                    placeholder="untitled recording"
+                    placeholder={recordingName}
+                    onChange={(e) => setRecordingName(e.target.value)}
                     className="text-[#4780CC] text-[18px] z-[1] focus:outline-none py-[1vw] pl-[2.8vw] w-[30%] placeholder:text-[#4780CC]"
                 />
             </div>
@@ -74,7 +79,7 @@ const Transcribe: React.FC = () => {
                     <mark className="bg-blue-200 px-1 text-[#2b2b2b] rounded-md">Phonetics:</mark>
                 </div>
             )}
-
+            <SaveModal isOpen={openSaveModal} onClose={() => setOpenSaveModal(false)} Name={recordingName}></SaveModal>
             </div>
             <div className="flex flex-col w-full justify-center items-center gap-3">
                 <h1 className='font-poppins text-gray-500 font-light text-[12px]'>note: Please only start recording after button turns red.</h1>
