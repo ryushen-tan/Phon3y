@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '../components/Navbar/Navbar';
 import background from '/background.png';
 import ShinyText from '../components/Text/ShinyText';
@@ -7,13 +7,38 @@ import Demo from '/demo.png';
 import { Link } from 'react-router-dom';
 
 const LandingPage: React.FC = () => {
+    const demoRef = useRef<HTMLDivElement | null>(null);
+    const [isDemoVisible, setIsDemoVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsDemoVisible(true);
+                }
+            },
+            { threshold: 0.5 }
+        );
+
+        const currentDemo = demoRef.current;
+        if (currentDemo) {
+            observer.observe(currentDemo);
+        }
+
+        return () => {
+            if (currentDemo) {
+                observer.unobserve(currentDemo);
+            }
+        };
+    }, []);
+
     return (
         <> 
             <Navbar />
             <div className='overflow-x-hidden'>
 
                 <div
-                    className="flex flex-col items-center h-[130vw] w-screen bg-cover bg-center"
+                    className="flex flex-col items-center h-[150vw] w-screen bg-cover bg-center"
                     style={{
                         backgroundImage:
                             'linear-gradient(-135deg, #8B9CFF 0%, #D5DAF0 50%, #B2C1D2 100%)'
@@ -33,23 +58,30 @@ const LandingPage: React.FC = () => {
                                 </h1>
                                 <p className='text-white w-[35%] text-center text-[12px] font-poppins mt-5'>Transcribe speech into phonetics, analyze important data, all in one place.</p>
                                 <Link to="/guest/transcribe">
-                                    <button className='w-[130px] h-[38px] rounded-[10px] bg-gradient-to-r border-2 border-white from-[#999999] to-[#666666] mt-5 flex justify-center items-center hover:opacity-[80%] hover:cursor-pointer'>
-                                        <ShinyText text="Get Started" disabled={false} className="text-[12px] font-medium text-white" speed={2} />
+                                    <button className='w-[130px] h-[38px] rounded-[10px] bg-gradient-to-r border-2 border-white from-[#999999] to-[#666666] mt-5 flex justify-center items-center hover:cursor-pointer'>
+                                        <ShinyText text="Get Started" disabled={false} className="text-[12px] font-medium text-white hover:font-bold" speed={2} />
                                     </button>
                                 </Link>
-
                             </div>
                         </div>
                     </div>
-                    <div className='flex justify-center items-center'>
+                    <div className='w-screen h-[400px] bg-white mt-50'>
+
+                    </div>
+                    <div
+                        ref={demoRef}
+                        className={`flex justify-center items-center transition-opacity duration-700 ${
+                            isDemoVisible ? 'opacity-100' : 'opacity-0'
+                        }`}
+                    >
                         <img src={Demo} alt="Demo Img" className='w-[60%] mt-100' />
                     </div>
                 </div>
+                
                 <Footer />
             </div>
-            
         </>
-    )
+    );
 }
 
-export default LandingPage
+export default LandingPage;
