@@ -36,7 +36,6 @@ const LandingPage: React.FC = () => {
         <> 
             <Navbar />
             <div className='overflow-x-hidden'>
-
                 <div
                     className="flex flex-col items-center h-[150vw] w-screen bg-cover bg-center"
                     style={{

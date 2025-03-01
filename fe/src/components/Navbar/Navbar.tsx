@@ -5,7 +5,8 @@ const Navbar: React.FC = () => {
                 <div className="w-[50%] h-12 py-5 px-8">
                     <div className="w-[50%] h-12 rounded-full bg-[#DDDDDD] border border-3 border-white flex justify-center items-center cursor-pointer hover:bg-[#FCFCFC] transition-all ease-in-out duration-500">
                         <div className="w-[96%] h-8 bg-[#FCFCFC] p-3 flex items-center rounded-2xl cursor-pointer flex justify-between">
-                            <h1 className="font-bold font-poppins">Phoney AI</h1>
+                            <h1 className="font-bold font-poppins">Phoney</h1>
+                            <img src="/logo.png" alt="Logo" className="w-6 h-6" />
                             <hr className="w-80"/>
                         </div>
                     </div>
