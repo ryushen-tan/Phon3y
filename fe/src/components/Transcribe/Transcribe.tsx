@@ -91,7 +91,7 @@ const Transcribe: React.FC = () => {
                         enableSave && enableDelete && (
                             <div className="flex w-[75%] justify-between items-center">
                                 <button 
-                                    className="w-[45%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-center items-center hover:cursor-pointer transition active:duration-300 active:ease-in active:bg-blue-500"
+                                    className="w-[45%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-center items-center hover:cursor-pointer transition hover:duration-300 hover:ease-in hover:bg-blue-700"
                                     onClick={onSave}
                                 >
                                     <h2 className="text-white font-poppins text-[18px] font-semibold text-md mx-auto">
@@ -99,7 +99,7 @@ const Transcribe: React.FC = () => {
                                     </h2>
                                 </button>
                                 <button 
-                                    className="w-[45%] bg-red-500 h-[2.5vw] rounded-full flex justify-center items-center hover:cursor-pointer transition active:delay-[800ms] active:duration-300 active:ease-in active:bg-blue-500"
+                                    className="w-[45%] bg-red-500 h-[2.5vw] rounded-full flex justify-center items-center hover:cursor-pointer transition hover:duration-300 hover:ease-in hover:bg-red-700"
                                     onClick={onDelete}
                                 >
                                     <h2 className="text-white font-poppins text-[18px] font-semibold text-md mx-auto">
@@ -111,7 +111,7 @@ const Transcribe: React.FC = () => {
                     }
                 </div>
                 <button 
-                    className="w-[75%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-between items-center hover:cursor-pointer transition active:delay-[800ms] active:duration-300 active:ease-in active:bg-red-500" 
+                    className="w-[75%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-between items-center hover:cursor-pointer transition active:delay-[500ms] hover:duration-300 hover:ease-in hover:bg-blue-700 active:duration-300 active:ease-in active:bg-red-500" 
                     onMouseDown={handleStartRecording} 
                     onMouseUp={handleStopRecording}
                 >

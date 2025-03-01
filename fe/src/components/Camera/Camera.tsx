@@ -17,7 +17,6 @@ const Camera: React.FC = () => {
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
                 }
-                console.log("Camera preloaded 🎥");
             } catch (error) {
                 console.error("Error accessing camera:", error);
             }
