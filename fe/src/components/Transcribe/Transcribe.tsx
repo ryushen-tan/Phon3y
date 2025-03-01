@@ -54,7 +54,7 @@ const Transcribe: React.FC = () => {
                     onData={onData}
                 />
                 <button 
-                    className="w-[75%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-between items-center hover:cursor-pointer active:bg-red-500" 
+                    className="w-[75%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-between items-center hover:cursor-pointer transition active:delay-[1000ms] active:duration-300 active:ease-in active:bg-red-500" 
                     onMouseDown={handleStartRecording} 
                     onMouseUp={handleStopRecording}
                 >
