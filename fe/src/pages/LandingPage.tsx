@@ -5,6 +5,7 @@ import ShinyText from '../components/Text/ShinyText';
 import Footer from '../components/Footer/Footer';
 import Demo from '/demo.png';
 import { Link } from 'react-router-dom';
+import GalleryCard from '../components/Gallery/GalleryCard';
 
 const LandingPage: React.FC = () => {
     const demoRef = useRef<HTMLDivElement | null>(null);
@@ -64,7 +65,17 @@ const LandingPage: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='w-screen h-[400px] mt-50 bg-black/10 bg-blur-xl border-1 border-gray-200 backdrop-blur-lg flex flex-col justify-center items-center'>
+                    <div className='w-screen h-[400px] mt-40 bg-black/10 bg-blur-xl border-1 border-gray-200 backdrop-blur-lg flex flex-col justify-center items-center'>
+                        <h1 className='text-white text-[34px] font-medium mt-20'>What's our Phoney Mission?</h1>
+                        <div className='flex gap-24 mt-10 text-[#2b2b2b]'>
+                            {/* <div className='w-[400px] bg-black/10 h-[300px] bg-white rounded-md flex justify-center items-center font-semibold text-[20px]'>
+                                <img src="" alt="" />
+                                <h2> "To help people lol" -ryu</h2>
+                            </div>
+                            <div className='w-[400px] h-[300px] bg-white rounded-md flex justify-center items-center font-semibold text-[20px] text-center p-3'>
+                                <h2> "To help people people communicate and build a database for SLP" -ryu</h2>
+                            </div> */}
+                        </div>
 
                     </div>
                     <div
