@@ -66,8 +66,8 @@ const LandingPage: React.FC = () => {
                         </div>
                     </div>
                     <div className='w-screen h-[400px] mt-40 bg-black/10 bg-blur-xl border-1 border-gray-200 backdrop-blur-lg flex flex-col justify-center items-center'>
-                        <h1 className='text-white text-[34px] font-medium mt-20'>What's our Phoney Mission?</h1>
-                        <div className='flex gap-24 mt-10 text-[#2b2b2b]'>
+                        <h1 className='text-white text-[34px] font-medium'>What's our Phoney Mission?</h1>
+                        <div className='flex gap-24 text-[#2b2b2b]'>
                             {/* <div className='w-[400px] bg-black/10 h-[300px] bg-white rounded-md flex justify-center items-center font-semibold text-[20px]'>
                                 <img src="" alt="" />
                                 <h2> "To help people lol" -ryu</h2>
