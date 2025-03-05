@@ -1,14 +1,14 @@
-import { useState } from 'react'
-import Transcribe from './components/Transcribe'
+import { Routes, Route } from 'react-router-dom';  // added import
+import LandingPage from './pages/LandingPage';
+import TranscribePage from './pages/TranscribePage';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <Transcribe></Transcribe>
-    </>
-  )
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/:username/transcribe" element={<TranscribePage />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;

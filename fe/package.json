@@ -10,15 +10,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ffmpeg/core": "^0.12.10",
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@reduxjs/toolkit": "^2.5.1",
     "@tailwindcss/vite": "^4.0.6",
+    "framer-motion": "^12.4.7",
     "react": "^19.0.0",
+    "react-audio-voice-recorder": "^2.2.0",
     "react-dom": "^19.0.0",
+    "react-mic": "^12.4.6",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.2.0",
     "tailwindcss": "^4.0.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
+    "@types/react-mic": "^12.4.6",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.19.0",
     "eslint-plugin-react-hooks": "^5.0.0",

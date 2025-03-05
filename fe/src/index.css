@@ -1,1 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
+
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+@font-face {
+    font-family: 'Harabara';
+    src: url('/fonts/Harabara.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font-harabara {
+    font-family: 'Harabara', sans-serif;
+}
+
+:root {
+    --fade-in-duration: 1s; /* default duration */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.fade-in {
+    animation: fadeIn var(--fade-in-duration) ease-in-out;
+}
+
+.fade-in-1 {
+    --fade-in-duration: 1s;
+}
+.fade-in-2 {
+    --fade-in-duration: 2s;
+}
+.fade-in-3 {
+    --fade-in-duration: 3s;
+}
+
+@layer utilities {
+    .animate-fade-in {
+        animation: fadeIn var(--fade-in-duration, 1s) ease-in-out;
+    }
+}
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(50%) sepia(100%) saturate(500%) hue-rotate(200deg);
+    cursor: pointer;
+}
