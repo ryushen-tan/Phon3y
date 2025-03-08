@@ -5,7 +5,7 @@ import ShinyText from '../components/Text/ShinyText';
 import Footer from '../components/Footer/Footer';
 import Demo from '/demo.png';
 import { Link } from 'react-router-dom';
-import GalleryCard from '../components/Gallery/GalleryCard';
+// import GalleryCard from '../components/Gallery/GalleryCard';
 
 const LandingPage: React.FC = () => {
     const demoRef = useRef<HTMLDivElement | null>(null);
@@ -84,7 +84,7 @@ const LandingPage: React.FC = () => {
                             isDemoVisible ? 'opacity-100' : 'opacity-0'
                         }`}
                     >
-                        <img src={Demo} alt="Demo Img" className='w-[60%] mt-90' />
+                        <img src={Demo} alt="Demo Img" className='w-[60%] mt-[20vw]' />
                     </div>
                 </div>
                 

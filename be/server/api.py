@@ -1,13 +1,26 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 import os
 from allosaurus.app import read_recognizer
+from werkzeug.utils import secure_filename
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+
+limiter = Limiter(
+    key_func=get_remote_address,
+    default_limits=["200 per day", "50 per hour"]
+)
+limiter.init_app(app) 
+
+
+# Enable CORS for all routes
+CORS(app, resources={r"/*": {"origins": "https://www.p3y.app"}})
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB
 
 UPLOAD_FOLDER = os.path.join(os.path.expanduser("~"), "Desktop", "uploads")
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Ensure upload folder exists
+os.makedirs(UPLOAD_FOLDER, exist_ok=True) 
 
 # Load Allosaurus model once
 model = read_recognizer()
@@ -23,9 +36,10 @@ def transcribe_audio():
     if audio_file.filename == '':
         return jsonify({"error": "Empty file name"}), 400
 
-    # Define file path
-    file_path = os.path.join(UPLOAD_FOLDER, "recording.wav")
-    
+    # Secure filename to prevent path traversal attacks
+    filename = secure_filename(audio_file.filename)
+    file_path = os.path.join(UPLOAD_FOLDER, filename)
+
     # Save the file
     try:
         audio_file.save(file_path)
@@ -51,5 +65,9 @@ def transcribe_audio():
 
     return jsonify({"transcription": transcription})
 
+@app.errorhandler(429)
+def ratelimit_handler(e):
+    return make_response(jsonify(error="Rate limit exceeded. Please try again later."), 429)
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True)

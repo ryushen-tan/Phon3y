@@ -6,7 +6,6 @@ import { AppDispatch } from "../../store/store";
 import { startRecording, stopRecording } from "../../store/recorderSlice"; 
 import { useAudioTranscription } from "./hooks.ts";
 import SaveModal from '../Save/SavePopup.tsx';
-import { div } from 'framer-motion/client';
 
 const Transcribe: React.FC = () => {
     
@@ -14,7 +13,7 @@ const Transcribe: React.FC = () => {
     const [record, setRecord] = useState(false);
     const [enableSave, setEnableSave] = useState(false);
     const [enableDelete, setEnableDelete] = useState(false);
-    const [recording, setRecording] = useState<RecordedBlob | null>(null);
+    // const [recording, setRecording] = useState<RecordedBlob | null>(null);
     const [recordingName, setRecordingName] = useState("untitiled recording");
     const [openSaveModal, setOpenSaveModal] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -25,9 +24,9 @@ const Transcribe: React.FC = () => {
         dispatch(startRecording());
     };
 
-    const handleEditing = () => {
-        setIsEditing(true);
-    };
+    // const handleEditing = () => {
+    //     setIsEditing(true);
+    // };
 
     const enableSaveOrDelete = () => {
         setEnableSave(true);
@@ -50,14 +49,14 @@ const Transcribe: React.FC = () => {
     };
 
     const onData = (recordedData: Blob) => {
-        console.log('Chunk of real-time data:', recordedData);
+        return recordedData;
     };
 
     const onStop = (recordedBlob: RecordedBlob) => {
         console.log('Recorded blob:', recordedBlob);
         const audioUrl = URL.createObjectURL(recordedBlob.blob);
         const audioPlay = new Audio(audioUrl);
-        setRecording(recordedBlob);
+        // setRecording(recordedBlob);
         audioPlay.play();
         postAudio(recordedBlob.blob);
     };

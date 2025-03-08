@@ -10,11 +10,14 @@ export const useAudioTranscription = () => {
                 const wavBlob = await convertWebMToWav(audio);
                 const formData = new FormData();
                 formData.append('audio', wavBlob, 'recording.wav');
-
-                const response = await fetch('http://localhost:5000/transcribe', {
-                    method: 'POST',
-                    body: formData
-                });
+                const response = await fetch("https://b522-184-145-158-110.ngrok-free.app/transcribe", {
+                    method: "POST",
+                    body: formData, 
+                    headers: {
+                      "Accept": "application/json"
+                    },
+                    mode: "cors"  // Ensure CORS mode is enabled
+                  });
 
                 const data: { transcription: string } = await response.json();
                 setTranscription(data.transcription);
