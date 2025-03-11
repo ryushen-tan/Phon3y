@@ -26,18 +26,18 @@ const GoogleAuth: React.FC = () => {
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        {!user ? (
-          <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
-        ) : (
-          <div>
-            <h2>Welcome, {user.name}</h2>
-            <img src={user.picture} alt="Profile" style={{ borderRadius: "50%" }} />
-            <button onClick={handleLogout} style={{ marginTop: "10px", padding: "5px 10px" }}>
-              Logout
-            </button>
-          </div>
-        )}
+      <div className="text-center mt-12">
+      {!user ? (
+        <GoogleLogin theme="filled_blue" size="large" width={250}  onSuccess={handleSuccess} onError={handleError} />
+      ) : (
+        <div>
+        <h2 className="text-2xl font-semibold">Welcome, {user.name}</h2>
+        <img src={user.picture} alt="Profile" className="rounded-full mt-4" />
+        <button onClick={handleLogout} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+          Logout
+        </button>
+        </div>
+      )}
       </div>
     </GoogleOAuthProvider>
   );
