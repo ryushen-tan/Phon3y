@@ -4,36 +4,55 @@ export const useAudioTranscription = () => {
     const [transcription, setTranscription] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
+    const getNgrokUrl = async (): Promise<string | null> => {
+        try {
+            const response = await fetch("http://127.0.0.1:5000/get-ngrok-url");
+            const data = await response.json();
+            return data.ngrok_url || null;
+        } catch (err) {
+            console.error("Error fetching Ngrok URL:", err);
+            return null;
+        }
+    };
+    
     const postAudio = async (audio: Blob | null): Promise<void> => {
         if (audio) {
             try {
+                const ngrokUrl = await getNgrokUrl();
+                if (!ngrokUrl) {
+                    setError("Failed to get Ngrok URL");
+                    return;
+                }
+
                 const wavBlob = await convertWebMToWav(audio);
                 const formData = new FormData();
-                formData.append('audio', wavBlob, 'recording.wav');
-                const response = await fetch("https://b522-184-145-158-110.ngrok-free.app/transcribe", {
+                formData.append("audio", wavBlob, "recording.wav");
+
+                const response = await fetch(`${ngrokUrl}/transcribe`, {
                     method: "POST",
-                    body: formData, 
+                    body: formData,
                     headers: {
-                      "Accept": "application/json"
+                        "Accept": "application/json"
                     },
-                    mode: "cors"  // Ensure CORS mode is enabled
-                  });
+                    mode: "cors"
+                });
 
                 const data: { transcription: string } = await response.json();
                 setTranscription(data.transcription);
             } catch (err: unknown) {
                 if (err instanceof Error) {
-                    setError('Error: ' + err.message);
+                    setError("Error: " + err.message);
                 } else {
-                    setError('An unknown error occurred');
+                    setError("An unknown error occurred");
                 }
-                console.error('Error:', err);
+                console.error("Error:", err);
             }
         }
     };
 
     return { transcription, error, postAudio };
 };
+
 
 // Function to convert WebM blob to WAV
 const convertWebMToWav = async (webmBlob: Blob): Promise<Blob> => {
