@@ -27,7 +27,7 @@ const LoginPage: React.FC = () => {
                         <GoogleAuth />
                     </div>
                     <hr className='w-full border-[#D7D7D7] border border-2'/>
-                    <p className='font-semibold text-md text-[#707070]'>Sign in with Partner Account</p>
+                    <p className='font-semibold text-md text-[#707070]'>Sign in P3Y Account</p>
                     <input className='bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] font-regular text-sm' type="email" placeholder='username' />
                     <input className='bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] font-regular text-sm' type="password" placeholder='password' />
                     <button className='bg-[#8499B4] rounded-[10px] py-2 w-full h-[40px] text-white font-poppins font-bold'>Get Started</button>
