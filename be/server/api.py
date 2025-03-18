@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 import os
+import requests
 from allosaurus.app import read_recognizer
 from werkzeug.utils import secure_filename
 from flask_limiter import Limiter
@@ -13,7 +14,6 @@ limiter = Limiter(
     default_limits=["200 per day", "50 per hour"]
 )
 limiter.init_app(app) 
-
 
 # Enable CORS for all routes
 CORS(app, resources={r"/*": {"origins": "https://www.p3y.app"}})
@@ -64,6 +64,24 @@ def transcribe_audio():
             os.remove(file_path)
 
     return jsonify({"transcription": transcription})
+
+@app.route('/get-ngrok-url', methods=['GET'])
+def get_ngrok_url():
+    """Fetches the public Ngrok URL dynamically"""
+    try:
+        response = requests.get("http://127.0.0.1:4040/api/tunnels", timeout=5)
+        response.raise_for_status()  # Raise an error for bad responses
+
+        data = response.json()
+        public_url = data["tunnels"][0]["public_url"] if data["tunnels"] else None
+
+        if not public_url:
+            return jsonify({"error": "No active Ngrok tunnels found"}), 404
+
+        return jsonify({"ngrok_url": public_url})
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Failed to fetch Ngrok URL: {str(e)}"}), 500
 
 @app.errorhandler(429)
 def ratelimit_handler(e):

@@ -8,5 +8,8 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  define: {
+    "process.env": process.env, // ✅ Inject environment variables manually
+  },
   
 })

@@ -30,9 +30,9 @@ const Navbar: React.FC = () => {
                             transition={{ duration: 0.3 }}
                             className="w-[20%] h-12 rounded-full bg-[#DDDDDD] border border-3 border-white flex justify-center items-center cursor-pointer hover:bg-[#FCFCFC] transition-all ease-in-out duration-500"
                     >
-                        <button className="w-[90%] h-8 bg-[#FCFCFC] p-3 flex items-center justify-center rounded-2xl cursor-pointer">
+                        <Link to={"/login"} className="w-[90%] h-8 bg-[#FCFCFC] p-3 flex items-center justify-center rounded-2xl cursor-pointer">
                             <h2 className="font-poppins text-[0.7vw] text-center font-semibold text-[#2b2b2b]">LOGIN | SIGNUP</h2>
-                        </button>
+                        </Link>
                     </motion.div>
 
                 </div>
