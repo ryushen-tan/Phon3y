@@ -16,7 +16,6 @@ const LoginPage: React.FC = () => {
                 </Link>
                 <img src={Overlay} alt="overlay" />
             </div>
-
             <div className='rounded-2xl w-[160vw] flex justify-center'>
                 <div className='flex flex-col justify-center gap-4'>
                     <div className='flex flex-col items-start'>
@@ -29,9 +28,13 @@ const LoginPage: React.FC = () => {
                     </div>
                     <hr className='w-full border-[#D7D7D7] border border-2'/>
                     <p className='font-semibold text-md text-[#707070]'>Sign in with Partner Account</p>
-                    <input className='bg-[#F5F5F5] rounded-[10px] p-2' type="text" />
-                    <input className='bg-[#F5F5F5] rounded-[10px] p-2' type="text" />
+                    <input className='bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] font-regular text-sm' type="email" placeholder='username' />
+                    <input className='bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] font-regular text-sm' type="password" placeholder='password' />
                     <button className='bg-[#8499B4] rounded-[10px] py-2 w-full h-[40px] text-white font-poppins font-bold'>Get Started</button>
+                    <Link to='/signup'>
+                        <p className='font-semibold text-sm text-[#707070] text-center absolute top-15 right-15'>Don't have an account? <span className='hover:cursor-pointer text-[#2b2b2b]'>Sign up</span></p>
+                    </Link>
+                    
 
                 </div>
             </div>
