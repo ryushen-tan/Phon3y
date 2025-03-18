@@ -1,24 +1,37 @@
 import React from 'react';
 import GoogleAuth from '../components/GoogleAuth/GoogleAuth';
 import Overlay from '/overlay.png';
+import Logo from '/logo.png';
+import { Link } from 'react-router-dom';
 const LoginPage: React.FC = () => {
     return (
         <div 
             className="flex bg-white h-screen items-center"
         >
             <div className='w-full ml-10'>
+                <Link to='/'>
+                    <div className='w-[60px] h-[60px] hover:cursor-pointer hover:opacity-[80%] flex justify-center items-center rounded-full absolute bg-white top-20 left-17'>
+                        <img className="w-[50px]" src={Logo} alt="" />
+                    </div>
+                </Link>
                 <img src={Overlay} alt="overlay" />
-
             </div>
 
-            <div className='rounded-2xl w-[230vw] flex justify-center bg-blue-300'>
-                <div className='flex flex-col justify-center items-center bg-red-300'>
+            <div className='rounded-2xl w-[160vw] flex justify-center'>
+                <div className='flex flex-col justify-center gap-4'>
                     <div className='flex flex-col items-start'>
-                        <h2 className=" text-5xl font-semibold text-gray-500">Phone-In</h2>
-                        <p className='font-semibold text-sm text-gray-500'>Sign in with Partner Account</p>
+                        <h2 className="text-7xl font-semibold text-[#707070]">Phone-In</h2>
+                        <p className='mt-15 font-semibold text-md text-[#707070]'>Sign in with Partner Account</p>
                     </div>
-
-                    <GoogleAuth />
+                    <div className='flex gap-10 items-start'>
+                        <GoogleAuth />
+                        <GoogleAuth />
+                    </div>
+                    <hr className='w-full border-[#D7D7D7] border border-2'/>
+                    <p className='font-semibold text-md text-[#707070]'>Sign in with Partner Account</p>
+                    <input className='bg-[#F5F5F5] rounded-[10px] p-2' type="text" />
+                    <input className='bg-[#F5F5F5] rounded-[10px] p-2' type="text" />
+                    <button className='bg-[#8499B4] rounded-[10px] py-2 w-full h-[40px] text-white font-poppins font-bold'>Get Started</button>
 
                 </div>
             </div>
