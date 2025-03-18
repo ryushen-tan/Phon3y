@@ -28,7 +28,7 @@ const GoogleAuth: React.FC = () => {
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <div className="text-center">
       {!user ? (
-        <GoogleLogin theme="filled_white" size="large" width={205}  onSuccess={handleSuccess} onError={handleError} />
+        <GoogleLogin theme="outline" size="large" width={205}  onSuccess={handleSuccess} onError={handleError} />
       ) : (
         <div>
         <h2 className="text-2xl font-semibold">Welcome, {user.name}</h2>
