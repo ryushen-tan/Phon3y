@@ -1,0 +1,5 @@
+matplotlib
+numpy
+seaborn
+tensorflow
+tensorflow_io
