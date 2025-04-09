@@ -76,7 +76,6 @@ const LandingPage: React.FC = () => {
                                 <h2> "To help people people communicate and build a database for SLP" -ryu</h2>
                             </div> */}
                         </div>
-
                     </div>
                     <div
                         ref={demoRef}
@@ -84,10 +83,9 @@ const LandingPage: React.FC = () => {
                             isDemoVisible ? 'opacity-100' : 'opacity-0'
                         }`}
                     >
-                        <img src={Demo} alt="Demo Img" className='w-[60%] mt-[20vw]' />
+                        <img src={Demo} alt="Demo Img" className='w-[60%] mt-[10%]' />
                     </div>
                 </div>
-                
                 <Footer />
             </div>
         </>
