@@ -6,7 +6,12 @@ import { Link } from 'react-router-dom';
 import { useSignUp } from './SignUpHooks';
 
 const SignUpPage: React.FC = () => {
-    const { handleSignUp } = useSignUp();
+    const { 
+        handleSignUp,
+        handleChange,
+        submitDisabled,
+        formValues
+     } = useSignUp();
     return (
         <div className="flex bg-white h-screen items-center">
             <div className="w-full ml-10">
@@ -39,7 +44,9 @@ const SignUpPage: React.FC = () => {
                             name="email"
                             className="bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] text-sm" 
                             type="email" 
-                            placeholder="Email" 
+                            placeholder="Email"
+                            onChange={handleChange}
+                            value={formValues.email}
                         />
 
                         <input 
@@ -47,6 +54,8 @@ const SignUpPage: React.FC = () => {
                             className="bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] text-sm" 
                             type="password" 
                             placeholder="Password" 
+                            onChange={handleChange}
+                            value={formValues.password}
                         />
 
                         <input 
@@ -54,12 +63,16 @@ const SignUpPage: React.FC = () => {
                             className="bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] font-regular text-sm" 
                             type="password" 
                             placeholder="Confirm Password" 
+                            onChange={handleChange}
+                            value={formValues.confirmPassword}
                         />
 
                         <button 
-                            type="submit" 
-                            className="bg-[#8499B4] rounded-[10px] py-2 px-3 w-full h-[40px] text-white font-poppins font-bold hover:cursor-pointer hover:opacity-[80%]">
-                            Sign Up
+                            type="submit"
+                            disabled={submitDisabled}
+                            className="bg-[#8499B4] rounded-[10px] py-2 px-3 w-full h-[40px] text-white font-poppins font-bold hover:cursor-pointer hover:opacity-[80%] disabled:opacity-50"
+                        >
+                            Create Account
                         </button>
                     </form>
                     <Link to='/login'>

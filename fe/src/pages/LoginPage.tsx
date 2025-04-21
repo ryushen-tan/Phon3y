@@ -6,7 +6,12 @@ import { Link } from 'react-router-dom';
 import { useSignIn } from './LogInHooks';
 
 const LoginPage: React.FC = () => {
-    const { handleSignIn } = useSignIn();
+    const { 
+        handleSignIn, 
+        handleChange, 
+        submitDisabled,
+        formValues
+     } = useSignIn();
     return (
         <div 
             className="flex bg-white h-screen items-center"
@@ -39,17 +44,22 @@ const LoginPage: React.FC = () => {
                             className='bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] font-regular text-sm' 
                             type="email" 
                             placeholder='username'
-                            name='email' 
+                            name='email'
+                            onChange={handleChange}
+                            value={formValues.email}
                         />
                         <input 
                             className='bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] font-regular text-sm' 
                             type="password" 
                             placeholder='password'
                             name='password' 
+                            onChange={handleChange}
+                            value={formValues.password}
                         />
                         <button 
-                            className='bg-[#8499B4] rounded-[10px] py-2 w-full h-[40px] text-white font-poppins font-bold hover: cursor-pointer hover:opacity-[80%]'
+                            className='bg-[#8499B4] rounded-[10px] py-2 w-full h-[40px] text-white font-poppins font-bold hover: cursor-pointer hover:opacity-[80%] disabled:opacity-50'
                             type='submit'
+                            disabled={submitDisabled}
                             >
                                 Get Started
                         </button>
