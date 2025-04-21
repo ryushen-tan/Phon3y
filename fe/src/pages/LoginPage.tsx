@@ -3,7 +3,10 @@ import GoogleAuth from '../components/GoogleAuth/GoogleAuth';
 import Overlay from '/overlay.png';
 import Logo from '/logo.png';
 import { Link } from 'react-router-dom';
+import { useSignIn } from './LogInHooks';
+
 const LoginPage: React.FC = () => {
+    const { handleSignIn } = useSignIn();
     return (
         <div 
             className="flex bg-white h-screen items-center"
@@ -27,10 +30,30 @@ const LoginPage: React.FC = () => {
                         <GoogleAuth />
                     </div>
                     <hr className='w-full border-[#D7D7D7] border border-2'/>
-                    <p className='font-semibold text-md text-[#707070]'>Sign in with your P3Y Account</p>
-                    <input className='bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] font-regular text-sm' type="email" placeholder='username' />
-                    <input className='bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] font-regular text-sm' type="password" placeholder='password' />
-                    <button className='bg-[#8499B4] rounded-[10px] py-2 w-full h-[40px] text-white font-poppins font-bold'>Get Started</button>
+                    <form 
+                        onSubmit={handleSignIn} 
+                        className='flex flex-col gap-4'
+                    >
+                        <p className='font-semibold text-md text-[#707070]'>Sign in with your P3Y Account</p>
+                        <input 
+                            className='bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] font-regular text-sm' 
+                            type="email" 
+                            placeholder='username'
+                            name='email' 
+                        />
+                        <input 
+                            className='bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] font-regular text-sm' 
+                            type="password" 
+                            placeholder='password'
+                            name='password' 
+                        />
+                        <button 
+                            className='bg-[#8499B4] rounded-[10px] py-2 w-full h-[40px] text-white font-poppins font-bold hover: cursor-pointer hover:opacity-[80%]'
+                            type='submit'
+                            >
+                                Get Started
+                        </button>
+                    </form>
                     <Link to='/signup'>
                         <p className='font-semibold text-sm text-[#707070] text-center absolute top-15 right-15'>Don't have an account? <span className='hover:cursor-pointer text-[#2b2b2b]'>Sign up</span></p>
                     </Link>

@@ -3,8 +3,10 @@ import GoogleAuth from '../components/GoogleAuth/GoogleAuth';
 import Overlay from '/overlay.png';
 import Logo from '/logo.png';
 import { Link } from 'react-router-dom';
+import { useSignUp } from './SignUpHooks';
 
 const SignUpPage: React.FC = () => {
+    const { handleSignUp } = useSignUp();
     return (
         <div className="flex bg-white h-screen items-center">
             <div className="w-full ml-10">
@@ -28,27 +30,38 @@ const SignUpPage: React.FC = () => {
                         <GoogleAuth />
                     </div>
                     <hr className="w-full border-[#D7D7D7] border border-2" />
-                    <p className="font-semibold text-md text-[#707070]">
-                        Create your account
-                    </p>
-                    <input 
-                        className="bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] text-sm" 
-                        type="email" 
-                        placeholder="Email" 
-                    />
-                    <input 
-                        className="bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] text-sm" 
-                        type="password" 
-                        placeholder="Password" 
-                    />
-                    <input 
-                        className="bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] font-regular text-sm" 
-                        type="password" 
-                        placeholder="Confirm Password" 
-                    />
-                    <button className="bg-[#8499B4] rounded-[10px] py-2 px-3 w-full h-[40px] text-white font-poppins font-bold">
-                        Sign Up
-                    </button>
+                    <form onSubmit={handleSignUp} className='flex flex-col gap-4'>
+                        <p className="font-semibold text-md text-[#707070]">
+                            Create your account
+                        </p>
+
+                        <input 
+                            name="email"
+                            className="bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] text-sm" 
+                            type="email" 
+                            placeholder="Email" 
+                        />
+
+                        <input 
+                            name="password"
+                            className="bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] text-sm" 
+                            type="password" 
+                            placeholder="Password" 
+                        />
+
+                        <input 
+                            name="confirmPassword"
+                            className="bg-[#F5F5F5] rounded-[10px] p-3 text-[#707070] font-regular text-sm" 
+                            type="password" 
+                            placeholder="Confirm Password" 
+                        />
+
+                        <button 
+                            type="submit" 
+                            className="bg-[#8499B4] rounded-[10px] py-2 px-3 w-full h-[40px] text-white font-poppins font-bold hover:cursor-pointer hover:opacity-[80%]">
+                            Sign Up
+                        </button>
+                    </form>
                     <Link to='/login'>
                         <p className="font-semibold text-sm text-[#707070] text-center absolute top-15 right-15">
                             Already have an account? <span className="hover:cursor-pointer text-[#2b2b2b]">Sign in</span>
