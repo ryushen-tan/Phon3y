@@ -3,7 +3,7 @@ import LandingPage from './pages/LandingPage';
 import TranscribePage from './pages/TranscribePage';
 import LoginPage from './pages/LoginPage'; 
 import SignUpPage from './pages/SignupPage';
-
+import Dashboard from './pages/Dashboard';
 function App() {
   return (
     <Routes>
@@ -11,6 +11,7 @@ function App() {
       <Route path="/:username/transcribe" element={<TranscribePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path='/signup' element={<SignUpPage />} />
+      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   );
 }
