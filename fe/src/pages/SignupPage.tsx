@@ -16,7 +16,7 @@ const SignUpPage: React.FC = () => {
         <div className="flex bg-white h-screen items-center">
             <div className="w-full ml-10">
                 <Link to="/">
-                    <div className="w-[60px] h-[60px] hover:cursor-pointer hover:opacity-[80%] flex justify-center items-center rounded-full absolute bg-white top-20 left-17">
+                    <div className="w-[60px] h-[60px] hover:cursor-pointer hover:opacity-[80%] flex justify-center items-center rounded-full absolute bg-white top-25 left-17">
                         <img className="w-[50px]" src={Logo} alt="Logo" />
                     </div>
                 </Link>
@@ -31,8 +31,6 @@ const SignUpPage: React.FC = () => {
                         </p>
                     </div>
                     <div className="flex gap-10 items-start">
-                        <GoogleAuth />
-                        <GoogleAuth />
                     </div>
                     <hr className="w-full border-[#D7D7D7] border border-2" />
                     <form onSubmit={handleSignUp} className='flex flex-col gap-4'>

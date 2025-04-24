@@ -2,10 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '../components/Navbar/Navbar';
 import background from '/background.png';
 import ShinyText from '../components/Text/ShinyText';
-import Footer from '../components/Footer/Footer';
-import Demo from '/demo.png';
+import Demo from '/mockup.png';
 import { Link } from 'react-router-dom';
-// import GalleryCard from '../components/Gallery/GalleryCard';
 
 const LandingPage: React.FC = () => {
     const demoRef = useRef<HTMLDivElement | null>(null);
@@ -41,7 +39,7 @@ const LandingPage: React.FC = () => {
                     className="flex flex-col items-center h-[150vw] w-screen bg-cover bg-center"
                     style={{
                         backgroundImage:
-                            'linear-gradient(-135deg, #8B9CFF 0%, #D5DAF0 50%, #B2C1D2 100%)'
+                            'linear-gradient(-85deg,rgb(95, 101, 255) 0%, #D5DAF0 70%, #B2C1D2 100%)'
                     }}
                 >
                     <div className='w-screen h-screen flex items-center flex-col'>
@@ -65,28 +63,20 @@ const LandingPage: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='w-screen h-[400px] mt-40 bg-black/10 bg-blur-xl border-1 border-gray-200 backdrop-blur-lg flex flex-col justify-center items-center'>
-                        <h1 className='text-white text-[34px] font-medium'>What's our Phoney Mission?</h1>
-                        <div className='flex gap-24 text-[#2b2b2b]'>
-                            {/* <div className='w-[400px] bg-black/10 h-[300px] bg-white rounded-md flex justify-center items-center font-semibold text-[20px]'>
-                                <img src="" alt="" />
-                                <h2> "To help people lol" -ryu</h2>
-                            </div>
-                            <div className='w-[400px] h-[300px] bg-white rounded-md flex justify-center items-center font-semibold text-[20px] text-center p-3'>
-                                <h2> "To help people people communicate and build a database for SLP" -ryu</h2>
-                            </div> */}
-                        </div>
+                    <div className='w-screen h-[400px] mt-40 bg-black/10 bg-blur-xl border-gray-200 backdrop-blur-lg flex flex-col justify-center items-center'>
+                        <h1 className='bg-gradient-to-l from-gray-400 to-white bg-clip-text text-transparent text-[60px] font-semibold w-[35%] text-center'>Here's How  Phoney Works</h1>
                     </div>
                     <div
                         ref={demoRef}
                         className={`flex justify-center items-center transition-opacity duration-700 ${
-                            isDemoVisible ? 'opacity-100' : 'opacity-0'
+                            isDemoVisible ? 'opacity-80' : 'opacity-0'
                         }`}
                     >
-                        <img src={Demo} alt="Demo Img" className='w-[60%] mt-[10%]' />
+                        <div className='w-full flex justify-end'>
+                            <img src={Demo} alt="Demo Img" className='w-[80%] mt-[20%]' />
+                        </div>
                     </div>
                 </div>
-                <Footer />
             </div>
         </>
     );
