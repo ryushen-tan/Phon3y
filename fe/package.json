@@ -14,6 +14,8 @@
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.5.1",
+    "@splinetool/react-spline": "^4.0.0",
+    "@supabase/supabase-js": "^2.49.4",
     "@tailwindcss/vite": "^4.0.6",
     "@tanstack/react-query": "^5.74.4",
     "@tanstack/react-query-devtools": "^5.74.4",
@@ -25,7 +27,9 @@
     "react-mic": "^12.4.6",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.2.0",
-    "tailwindcss": "^4.0.6"
+    "supabase": "^2.22.6",
+    "tailwindcss": "^4.0.6",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",

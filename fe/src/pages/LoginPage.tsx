@@ -1,5 +1,4 @@
 import React from 'react';
-import GoogleAuth from '../components/GoogleAuth/GoogleAuth';
 import Overlay from '/overlay.png';
 import Logo from '/logo.png';
 import { Link } from 'react-router-dom';

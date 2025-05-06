@@ -1,8 +1,11 @@
-import { signIn } from "../services/account-services";
 import React from "react";
+import { signIn } from "../services/account-services";
+import { useAuthStore } from "../store/globalStore";
+import { useNavigate } from "react-router-dom";
 
 export function useSignIn() {
-
+    const navigate = useNavigate();
+    const { setUser } = useAuthStore(); 
     const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -10,9 +13,14 @@ export function useSignIn() {
         const password = formData.get('password') as string;
 
         try {
-
-            await signIn({ email, password });
-            window.location.href = '/dashboard'; 
+            const response = await signIn({ email, password });
+            const data = JSON.parse(response.data);
+            setUser({
+                id: data.user.id,
+                email: data.user.email,
+                name: data.user.user_metadata.full_name,
+            }, true);
+            navigate("/dashboard"); // Redirect to home page after successful sign-in
         } catch (error) {
             console.error('Sign In Failed:', error);
         }

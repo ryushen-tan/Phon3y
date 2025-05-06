@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-
+import { useNavbar } from "./NavbarHooks";
 const Navbar: React.FC = () => {
+    const { 
+        userValue,
+        userDesitinationUrl,
+        handleUserClick
+     } = useNavbar();
     return (
         <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md">
             <div className="absolute flex w-[99.2vw] justify-between z-50">
@@ -30,8 +35,16 @@ const Navbar: React.FC = () => {
                             transition={{ duration: 0.3 }}
                             className="w-[20%] h-12 rounded-full bg-[#DDDDDD] border border-3 border-white flex justify-center items-center cursor-pointer hover:bg-[#FCFCFC] transition-all ease-in-out duration-500"
                     >
-                        <Link to={"/login"} className="w-[90%] h-8 bg-[#FCFCFC] p-3 flex items-center justify-center rounded-2xl cursor-pointer">
-                            <h2 className="font-poppins text-[0.7vw] text-center font-semibold text-[#2b2b2b]">LOGIN | SIGNUP</h2>
+                        <Link 
+                            to={userDesitinationUrl} 
+                            className="w-[90%] h-8 bg-[#FCFCFC] p-3 flex items-center justify-center rounded-2xl cursor-pointer"
+                            onClick={handleUserClick}
+                        >
+                            <h2 
+                                className="font-poppins text-[0.7vw] text-center font-semibold text-[#2b2b2b]"
+                            >
+                                {userValue}
+                            </h2>
                         </Link>
                     </motion.div>
 
