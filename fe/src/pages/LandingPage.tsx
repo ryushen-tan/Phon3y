@@ -5,7 +5,7 @@ import Spline from '@splinetool/react-spline';
 import Demo from '/mockup.png';
 import { Link } from 'react-router-dom';
 import { useLandingPage } from './LandingPageHooks';
-import PhoneyText from '/phoneyText.png';
+
 const LandingPage: React.FC = () => {
     const demoRef = useRef<HTMLDivElement | null>(null);
     const [isDemoVisible, setIsDemoVisible] = useState(false);

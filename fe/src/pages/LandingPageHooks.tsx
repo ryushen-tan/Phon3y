@@ -1,4 +1,4 @@
-import { useAuthStore } from "../store/globalStore";
+import { useAuthStore } from "../store/AuthStore";
 
 export function useLandingPage() {
     // const destinationUrl = "/dashboard";

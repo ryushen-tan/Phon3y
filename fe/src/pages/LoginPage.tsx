@@ -9,7 +9,8 @@ const LoginPage: React.FC = () => {
         handleSignIn, 
         handleChange, 
         submitDisabled,
-        formValues
+        formValues,
+        message
      } = useSignIn();
     return (
         <div 
@@ -59,11 +60,10 @@ const LoginPage: React.FC = () => {
                                 Get Started
                         </button>
                     </form>
+                    <p>{message}</p>
                     <Link to='/signup'>
                         <p className='font-semibold text-sm text-[#707070] text-center absolute top-15 right-15'>Don't have an account? <span className='hover:cursor-pointer text-[#2b2b2b]'>Sign up</span></p>
                     </Link>
-                    
-
                 </div>
             </div>
         </div>
