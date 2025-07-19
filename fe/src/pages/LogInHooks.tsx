@@ -9,6 +9,7 @@ export function useSignIn() {
     const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
 
         event.preventDefault();
+        setMessage(""); // Clear previous message
         const formData = new FormData(event.currentTarget);
         const email = formData.get('email') as string;
         const password = formData.get('password') as string;
@@ -26,8 +27,21 @@ export function useSignIn() {
 
             navigate("/dashboard"); // Redirect to home page after successful sign-in
 
-        } catch (error) {
+        } catch (error: any) {
             console.error('Sign In Failed:', error);
+            // Try to extract error message from backend response
+            let msg = "Login failed";
+            if (error?.response) {
+                try {
+                    const errData = await error.response.json?.();
+                    msg = errData?.error || errData?.message || msg;
+                } catch {
+                    msg = error.response.statusText || msg;
+                }
+            } else if (error?.message) {
+                msg = error.message;
+            }
+            setMessage(msg);
         }
     };
 
@@ -43,5 +57,5 @@ export function useSignIn() {
 
     const submitDisabled = !formValues.email || !formValues.password;
 
-    return { handleSignIn, handleChange, submitDisabled, formValues, message};
+    return { handleSignIn, handleChange, submitDisabled, formValues, message };
 }

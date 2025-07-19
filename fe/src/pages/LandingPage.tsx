@@ -9,7 +9,7 @@ import { useLandingPage } from './LandingPageHooks';
 const LandingPage: React.FC = () => {
     const demoRef = useRef<HTMLDivElement | null>(null);
     const [isDemoVisible, setIsDemoVisible] = useState(false);
-    const { destinationUrl } = useLandingPage(); // Assuming you have a useNavbar hook to get the destination URL
+    const { destinationUrl } = useLandingPage();
 
     useEffect(() => {
         const observer = new IntersectionObserver(

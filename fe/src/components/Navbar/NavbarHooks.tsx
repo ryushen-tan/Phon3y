@@ -16,5 +16,5 @@ export function useNavbar() {
     }
 
 
-    return { userValue, userDesitinationUrl, handleUserClick };
+    return { userValue, userDesitinationUrl, handleUserClick, isSignedIn };
 }
