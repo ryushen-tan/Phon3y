@@ -23,13 +23,12 @@ export function useSignIn() {
                 name: data.user.user_metadata.full_name,
             }, true);
 
-            setMessage(data.message); // Set the message in the store
+            setMessage(data.message);
 
-            navigate("/dashboard"); // Redirect to home page after successful sign-in
+            navigate("/dashboard");
 
         } catch (error: any) {
             console.error('Sign In Failed:', error);
-            // Try to extract error message from backend response
             let msg = "Login failed";
             if (error?.response) {
                 try {

@@ -39,7 +39,7 @@ const LandingPage: React.FC = () => {
             <Navbar />
             <div className='overflow-x-hidden'>
                 <div
-                    className="flex flex-col items-center h-[150vw] w-screen bg-cover bg-center"
+                    className="flex flex-col items-center h-full w-screen bg-cover bg-center"
                     style={{
                         backgroundImage:
                             'linear-gradient(-85deg,rgb(95, 101, 255) 0%, #D5DAF0 70%, #B2C1D2 100%)'
@@ -92,35 +92,6 @@ const LandingPage: React.FC = () => {
 
                         </div>
                     </div>
-
-                    </div>
-                    <div className='w-full flex flex-row justify-center items-center mt-[10%] gap-8'>
-                        <h1 
-                            className='text-white opacity-80 text-[128px] track-tighter top-[80%] left-[10%]'
-                        >
-                            spiːtʃ
-                        </h1>
-                        <h1 
-                            className='text-white opacity-80 text-[128px] track-tighter top-[90%] left-[45%]'
-                        >
-                            fɔːr
-                        </h1>
-                        <h1 
-                            className='text-white opacity-80 text-[128px] track-tighter top-[100%] left-[70%]'
-                        >
-                            ˈevriwʌn
-                        </h1>
-                    </div>
-                    
-                    <div
-                        ref={demoRef}
-                        className={`flex justify-center items-center transition-opacity duration-700 ${
-                            isDemoVisible ? 'opacity-80' : 'opacity-0'
-                        }`}
-                    >
-                        <div className='w-full flex justify-center'>
-                            <img src={Demo} alt="Demo Img" className='w-[80%] mt-[10%]' />
-                        </div>
                     </div>
                 </div>
             </div>
