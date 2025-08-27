@@ -6,7 +6,11 @@ export const useAudioTranscription = () => {
 
     const getNgrokUrl = async (): Promise<string | null> => {
         try {
-            const response = await fetch("http://127.0.0.1:5000/get-ngrok-url");
+            const response = await fetch("http://127.0.0.1:5000/get-ngrok-url", { mode: 'cors' });
+            if (!response.ok) {
+                console.error('Failed to fetch ngrok url, status:', response.status);
+                return null;
+            }
             const data = await response.json();
             return data.ngrok_url || null;
         } catch (err) {
@@ -36,6 +40,11 @@ export const useAudioTranscription = () => {
                     },
                     mode: "cors"
                 });
+
+                if (!response.ok) {
+                    const text = await response.text().catch(() => '');
+                    throw new Error(`Transcription server error: ${response.status} ${text}`);
+                }
 
                 const data: { transcription: string } = await response.json();
                 setTranscription(data.transcription);

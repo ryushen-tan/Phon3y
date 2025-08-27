@@ -15,8 +15,8 @@ limiter = Limiter(
 )
 limiter.init_app(app) 
 
-# Enable CORS for all routes
-CORS(app, resources={r"/*": {"origins": "https://www.p3y.app"}})
+# Enable CORS for production and local development (allow localhost dev server origins)
+CORS(app, resources={r"/*": {"origins": ["https://www.p3y.app", "http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000"]}})
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB
 
 UPLOAD_FOLDER = os.path.join(os.path.expanduser("~"), "Desktop", "uploads")

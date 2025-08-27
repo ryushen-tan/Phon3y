@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ReactMic } from 'react-mic';
+import Recorder from './Recorder';
 import { RecordedBlob } from './types';
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
@@ -81,8 +81,8 @@ const Transcribe: React.FC = () => {
                 >
                 { !isEditing ? 
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.1123 4.95503L5.20978 13.8575C4.41478 14.66 2.03728 15.0275 1.45978 14.495C0.882284 13.9625 1.30227 11.585 2.09727 10.7825L10.9998 1.88005C11.4109 1.48856 11.9587 1.27328 12.5263 1.28019C13.0939 1.28711 13.6363 1.51568 14.0377 1.91708C14.4391 2.31848 14.6677 2.86091 14.6746 3.42852C14.6816 3.99614 14.4663 4.54397 14.0748 4.95503H14.1123Z" stroke="#7390B5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M14.75 14.75H8" stroke="#4780CC" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14.1123 4.95503L5.20978 13.8575C4.41478 14.66 2.03728 15.0275 1.45978 14.495C0.882284 13.9625 1.30227 11.585 2.09727 10.7825L10.9998 1.88005C11.4109 1.48856 11.9587 1.27328 12.5263 1.28019C13.0939 1.28711 13.6363 1.51568 14.0377 1.91708C14.4391 2.31848 14.6677 2.86091 14.6746 3.42852C14.6816 3.99614 14.4663 4.54397 14.0748 4.95503H14.1123Z" stroke="#7390B5" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M14.75 14.75H8" stroke="#4780CC" strokeLinecap="round" strokeLinejoin="round"/>
                                 </svg>
                                 :
                                 <div className="flex justify-center items-center" />}
@@ -103,7 +103,7 @@ const Transcribe: React.FC = () => {
             </div>
             <div className="flex flex-col w-full justify-center items-center gap-3">
                 <h1 className='font-poppins text-gray-500 font-light text-[12px]'>note: Please only start recording after button turns red.</h1>
-                <ReactMic
+                <Recorder
                     className="hidden"
                     record={record}
                     onStop={onStop}

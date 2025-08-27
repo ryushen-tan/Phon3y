@@ -1,38 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '../components/Navbar/Navbar';
 import ShinyText from '../components/Text/ShinyText';
 import Spline from '@splinetool/react-spline';
-import Demo from '/mockup.png';
 import { Link } from 'react-router-dom';
 import { useLandingPage } from './LandingPageHooks';
 
+
 const LandingPage: React.FC = () => {
-    const demoRef = useRef<HTMLDivElement | null>(null);
-    const [isDemoVisible, setIsDemoVisible] = useState(false);
     const { destinationUrl } = useLandingPage();
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsDemoVisible(true);
-                }
-            },
-            { threshold: 0.5 }
-        );
-
-        const currentDemo = demoRef.current;
-        if (currentDemo) {
-            observer.observe(currentDemo);
-        }
-
-        return () => {
-            if (currentDemo) {
-                observer.unobserve(currentDemo);
-            }
-        };
-    }, []);
-
 
     return (
         <> 
@@ -46,7 +20,6 @@ const LandingPage: React.FC = () => {
                     }}
                 >
                     <div className="w-screen h-screen flex flex-col items-center">
-
                     {/* Background Light Layer with Spline Scene */}
                     <div className="absolute pointer-events-none z-[2] w-[98.5vw] h-screen bg-white opacity-[10%] rounded-[30px] border-2 border-white">
                     </div>
