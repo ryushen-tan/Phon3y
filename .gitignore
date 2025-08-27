@@ -171,4 +171,11 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
+# Data directories and files
+data/
+*/data/
+**/*.json
+**/session_*.json
+**/frame_*.json
+
 TIMIT/

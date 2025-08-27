@@ -4,6 +4,12 @@ import os
 import requests
 from allosaurus.app import read_recognizer
 from werkzeug.utils import secure_filename
+from services.transcription_service import transcribe_uploaded_file
+from utils.ngrok import fetch_public_url, NgrokError
+from services.mouth_service import FaceMeshDetector
+
+# instantiate a single detector for the app
+_face_mesh_detector = FaceMeshDetector()
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
@@ -22,13 +28,9 @@ app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB
 UPLOAD_FOLDER = os.path.join(os.path.expanduser("~"), "Desktop", "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True) 
 
-# Load Allosaurus model once
-model = read_recognizer()
-
 @app.route('/transcribe', methods=['POST'])
 def transcribe_audio():
-    print("Transcribing audio...")
-
+    """Endpoint: receives uploaded audio as form file 'audio', returns JSON transcription."""
     if 'audio' not in request.files:
         return jsonify({"error": "No audio file provided"}), 400
 
@@ -36,32 +38,12 @@ def transcribe_audio():
     if audio_file.filename == '':
         return jsonify({"error": "Empty file name"}), 400
 
-    # Secure filename to prevent path traversal attacks
-    filename = secure_filename(audio_file.filename)
-    file_path = os.path.join(UPLOAD_FOLDER, filename)
-
-    # Save the file
     try:
-        audio_file.save(file_path)
-        print(f"File saved at: {file_path}, Exists: {os.path.exists(file_path)}")
+        transcription = transcribe_uploaded_file(audio_file, upload_folder=UPLOAD_FOLDER)
     except Exception as e:
-        return jsonify({"error": f"Failed to save file: {str(e)}"}), 500
-
-    # Ensure the model is loaded
-    if model is None:
-        return jsonify({"error": "Failed to load Allosaurus model"}), 500
-
-    try:
-        print("Attempting transcription...")
-        transcription = model.recognize(os.path.abspath(file_path), 'eng')
-        print("Transcription successful!")
-    except Exception as e:
-        print(f"Transcription failed: {str(e)}")
+        # Keep error messages for debugging but do not leak internal state
+        app.logger.exception("Transcription failed")
         return jsonify({"error": f"Transcription failed: {str(e)}"}), 500
-    finally:
-        # Delete file *after* transcription
-        if os.path.exists(file_path):
-            os.remove(file_path)
 
     return jsonify({"transcription": transcription})
 
@@ -69,19 +51,39 @@ def transcribe_audio():
 def get_ngrok_url():
     """Fetches the public Ngrok URL dynamically"""
     try:
-        response = requests.get("http://127.0.0.1:4040/api/tunnels", timeout=5)
-        response.raise_for_status()  # Raise an error for bad responses
-
-        data = response.json()
-        public_url = data["tunnels"][0]["public_url"] if data["tunnels"] else None
-
+        public_url = fetch_public_url()
         if not public_url:
             return jsonify({"error": "No active Ngrok tunnels found"}), 404
-
         return jsonify({"ngrok_url": public_url})
-
-    except requests.exceptions.RequestException as e:
+    except NgrokError as e:
+        app.logger.exception("Ngrok API fetch failed")
         return jsonify({"error": f"Failed to fetch Ngrok URL: {str(e)}"}), 500
+
+
+@app.route('/mouth/track', methods=['POST'])
+@limiter.exempt
+def mouth_track():
+    """Accepts a single frame under form key 'frame' (image file) and optional 'session_id'.
+
+    Processes it with MediaPipe FaceMesh and persists mouth landmarks. Returns path to stored JSON.
+    """
+    if 'frame' not in request.files:
+        return jsonify({'error': 'No frame provided'}), 400
+
+    frame = request.files['frame']
+    session_id = request.form.get('session_id')
+
+    try:
+        image_bytes = frame.read()
+        landmarks = _face_mesh_detector.process_image_bytes(image_bytes)
+        if landmarks is None:
+            return jsonify({'error': 'No face detected'}), 422
+
+        path = _face_mesh_detector.save_frame_landmarks(landmarks, session_id=session_id)
+        return jsonify({'saved_path': path, 'landmarks': landmarks}), 200
+    except Exception as e:
+        app.logger.exception('Failed processing frame')
+        return jsonify({'error': f'Failed to process frame: {str(e)}'}), 500
 
 @app.errorhandler(429)
 def ratelimit_handler(e):
