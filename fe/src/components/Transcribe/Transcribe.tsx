@@ -1,68 +1,29 @@
-import { useState } from 'react';
 import Recorder from './Recorder';
-import { RecordedBlob } from './types';
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
-import { startRecording, stopRecording } from "../../store/recorderSlice"; 
-import { useAudioTranscription } from "./hooks.ts";
+import { useAudioTranscription, useRecordingState, useTranscribeUI, useRecordingActions } from "./hooks.ts";
 import SaveModal from '../Save/SavePopup.tsx';
 
 const Transcribe: React.FC = () => {
     
     const { postAudio, transcription } = useAudioTranscription();
-    const [record, setRecord] = useState(false);
-    const [enableSave, setEnableSave] = useState(false);
-    const [enableDelete, setEnableDelete] = useState(false);
-    // const [recording, setRecording] = useState<RecordedBlob | null>(null);
-    const [recordingName, setRecordingName] = useState("untitiled recording");
-    const [openSaveModal, setOpenSaveModal] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
-    const dispatch = useDispatch<AppDispatch>(); 
+    const { record, handleStartRecording, handleStopRecording } = useRecordingState();
+    const {
+        enableSave,
+        enableDelete,
+        recordingName,
+        setRecordingName,
+        openSaveModal,
+        setOpenSaveModal,
+        isEditing,
+        setIsEditing,
+        enableSaveOrDelete,
+        onDelete,
+        onSave
+    } = useTranscribeUI();
+    const { onData, onStop } = useRecordingActions(postAudio);
 
-    const handleStartRecording = () => {
-        setRecord(true);
-        dispatch(startRecording());
-    };
-
-    // const handleEditing = () => {
-    //     setIsEditing(true);
-    // };
-
-    const enableSaveOrDelete = () => {
-        setEnableSave(true);
-        setEnableDelete(true);
-    };
-
-    const disableSaveOrDelete = () => {
-        setEnableSave(false);
-        setEnableDelete(false);
-    };
-
-    const onDelete = () => {
-        disableSaveOrDelete();
-    };
-
-    const handleStopRecording = () => {
-        setRecord(false);
-        dispatch(stopRecording());
+    const handleRecordingStop = () => {
+        handleStopRecording();
         enableSaveOrDelete();
-    };
-
-    const onData = (recordedData: Blob) => {
-        return recordedData;
-    };
-
-    const onStop = (recordedBlob: RecordedBlob) => {
-        console.log('Recorded blob:', recordedBlob);
-        const audioUrl = URL.createObjectURL(recordedBlob.blob);
-        const audioPlay = new Audio(audioUrl);
-        // setRecording(recordedBlob);
-        audioPlay.play();
-        postAudio(recordedBlob.blob);
-    };
-
-    const onSave = () => {
-        setOpenSaveModal(true);
     };
     
     return (
@@ -138,7 +99,7 @@ const Transcribe: React.FC = () => {
                 <button 
                     className="w-[75%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-between items-center hover:cursor-pointer transition active:delay-[500ms] hover:duration-300 hover:ease-in hover:bg-blue-700 active:duration-300 active:ease-in active:bg-red-500" 
                     onMouseDown={handleStartRecording} 
-                    onMouseUp={handleStopRecording}
+                    onMouseUp={handleRecordingStop}
                 >
                     <h2 className="text-white font-poppins text-[18px] font-semibold text-md mx-auto pl-[2vw]">Hold to Record</h2>
                     <div className="mr-4">

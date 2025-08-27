@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { startRecording, stopRecording } from "../../store/recorderSlice";
+import { RecordedBlob } from './types';
 
 export const useAudioTranscription = () => {
     const [transcription, setTranscription] = useState<string | null>(null);
@@ -133,5 +137,89 @@ const writeString = (view: DataView, offset: number, string: string): void => {
     for (let i = 0; i < string.length; i++) {
         view.setUint8(offset + i, string.charCodeAt(i));
     }
+};
+
+// Hook for managing recording state and actions
+export const useRecordingState = () => {
+    const [record, setRecord] = useState(false);
+    const dispatch = useDispatch<AppDispatch>();
+
+    const handleStartRecording = () => {
+        setRecord(true);
+        dispatch(startRecording());
+    };
+
+    const handleStopRecording = () => {
+        setRecord(false);
+        dispatch(stopRecording());
+    };
+
+    return {
+        record,
+        handleStartRecording,
+        handleStopRecording
+    };
+};
+
+// Hook for managing UI state (save/delete buttons, editing, etc.)
+export const useTranscribeUI = (initialRecordingName = "untitiled recording") => {
+    const [enableSave, setEnableSave] = useState(false);
+    const [enableDelete, setEnableDelete] = useState(false);
+    const [recordingName, setRecordingName] = useState(initialRecordingName);
+    const [openSaveModal, setOpenSaveModal] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+
+    const enableSaveOrDelete = () => {
+        setEnableSave(true);
+        setEnableDelete(true);
+    };
+
+    const disableSaveOrDelete = () => {
+        setEnableSave(false);
+        setEnableDelete(false);
+    };
+
+    const onDelete = () => {
+        disableSaveOrDelete();
+    };
+
+    const onSave = () => {
+        setOpenSaveModal(true);
+    };
+
+    return {
+        enableSave,
+        enableDelete,
+        recordingName,
+        setRecordingName,
+        openSaveModal,
+        setOpenSaveModal,
+        isEditing,
+        setIsEditing,
+        enableSaveOrDelete,
+        disableSaveOrDelete,
+        onDelete,
+        onSave
+    };
+};
+
+// Hook for managing recording actions and data handling
+export const useRecordingActions = (postAudio: (blob: Blob) => Promise<void>) => {
+    const onData = (recordedData: Blob) => {
+        return recordedData;
+    };
+
+    const onStop = (recordedBlob: RecordedBlob) => {
+        console.log('Recorded blob:', recordedBlob);
+        const audioUrl = URL.createObjectURL(recordedBlob.blob);
+        const audioPlay = new Audio(audioUrl);
+        audioPlay.play();
+        postAudio(recordedBlob.blob);
+    };
+
+    return {
+        onData,
+        onStop
+    };
 };
 
