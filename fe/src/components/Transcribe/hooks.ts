@@ -162,7 +162,7 @@ export const useRecordingState = () => {
 };
 
 // Hook for managing UI state (save/delete buttons, editing, etc.)
-export const useTranscribeUI = (initialRecordingName = "untitiled recording") => {
+export const useTranscribeUI = (initialRecordingName = "untitled recording") => {
     const [enableSave, setEnableSave] = useState(false);
     const [enableDelete, setEnableDelete] = useState(false);
     const [recordingName, setRecordingName] = useState(initialRecordingName);

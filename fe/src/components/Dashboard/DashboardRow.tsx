@@ -2,7 +2,7 @@ import React from 'react';
 
 interface DashboardRowProps {
     profilePicture: string;
-    children: React.ReactNode;
+    children?: React.ReactNode;
     isSelected?: boolean;
     onClick?: () => void;
 }

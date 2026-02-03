@@ -1,8 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import recorderSlice from "./recorderSlice"; // Ensure this is a valid Redux slice
+import recorderSlice from "./recorderSlice";
+import sessionsSlice from "./sessionsSlice";
+import transcribeViewSlice from "./transcribeViewSlice";
+
 export const store = configureStore({
   reducer: {
     recorder: recorderSlice,
+    sessions: sessionsSlice,
+    transcribeView: transcribeViewSlice,
   },
 });
 

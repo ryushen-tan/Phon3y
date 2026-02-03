@@ -1,9 +1,17 @@
 import Recorder from './Recorder';
 import { useAudioTranscription, useRecordingState, useTranscribeUI, useRecordingActions } from "./hooks.ts";
 import SaveModal from '../Save/SavePopup.tsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { addSession } from '../../store/sessionsSlice';
+import { clearSelectedSession } from '../../store/transcribeViewSlice';
 
 const Transcribe: React.FC = () => {
-    
+    const dispatch = useDispatch<AppDispatch>();
+    const selectedSessionId = useSelector((state: RootState) => state.transcribeView.selectedSessionId);
+    const sessions = useSelector((state: RootState) => state.sessions);
+    const selectedSession = selectedSessionId ? sessions.find((s) => s.id === selectedSessionId) : null;
+
     const { postAudio, transcription } = useAudioTranscription();
     const { record, handleStartRecording, handleStopRecording } = useRecordingState();
     const {
@@ -16,25 +24,48 @@ const Transcribe: React.FC = () => {
         isEditing,
         setIsEditing,
         enableSaveOrDelete,
+        disableSaveOrDelete,
         onDelete,
         onSave
     } = useTranscribeUI();
     const { onData, onStop } = useRecordingActions(postAudio);
 
+    const handleSaveSession = (data: { title: string; description: string; date: string }) => {
+        dispatch(addSession({
+            title: data.title,
+            description: data.description,
+            date: data.date,
+            transcribedText: transcription ?? '',
+        }));
+        setOpenSaveModal(false);
+        disableSaveOrDelete();
+        setRecordingName('untitled recording');
+    };
+
     const handleRecordingStop = () => {
         handleStopRecording();
         enableSaveOrDelete();
     };
-    
+
+    const handleStartRecordingWithClear = () => {
+        dispatch(clearSelectedSession());
+        handleStartRecording();
+    };
+
+    const displayText = selectedSession ? selectedSession.transcribedText : (enableSave && enableDelete ? (transcription ?? 'loading...') : '');
+
     return (
         <div className="w-[45vw] h-[40vw] rounded-[20px] bg-[#FCFCFC]">
             <div className="w-full h-[3.5vw] bg-[#C9DEFF] border-3 border-white border-b-0 rounded-t-[20px] flex items-center">
                 <input
-                    placeholder={recordingName}
-                    onChange={(e) => setRecordingName(e.target.value)}
-                    onFocus={() => setIsEditing(true)}
-                    className="text-[#4780CC] text-[18px] z-[1] focus:outline-none py-[1vw] pl-[2.8vw] w-[90%] placeholder:text-[#4780CC]"
+                    placeholder={selectedSession ? undefined : 'untitled recording'}
+                    value={selectedSession ? selectedSession.title : recordingName}
+                    readOnly={!!selectedSession}
+                    onChange={(e) => !selectedSession && setRecordingName(e.target.value)}
+                    onFocus={() => !selectedSession && setIsEditing(true)}
+                    className="text-[#4780CC] text-[18px] z-[1] focus:outline-none py-[1vw] pl-[2.8vw] w-[90%] placeholder:text-[#4780CC] bg-transparent"
                 />
+                {!selectedSession && (
                 <button 
                     type="button" 
                     onClick={() => document.querySelector('input')?.focus()}
@@ -49,18 +80,35 @@ const Transcribe: React.FC = () => {
                                 <div className="flex justify-center items-center" />}
 
                 </button>
+                )}
             </div>
             <div className="p-[3vw] text-lg text-[#4F4F4F] font-light w-full h-[28vw]">
-            {enableSave && enableDelete ? (
+            {(selectedSession || enableSave && enableDelete) ? (
                 <div className='w-full h-full'>
-                    <mark className="bg-blue-200 px-1 text-[#2b2b2b] rounded-md">Phonetics:</mark> { transcription ? transcription : "loading..."}
+                    <mark className="bg-blue-200 px-1 text-[#2b2b2b] rounded-md">Phonetics:</mark> { displayText || 'loading...' }
                 </div>
             ) : (
                 <div className='w-full h-full'>
                     <mark className="bg-blue-200 px-1 text-[#2b2b2b] rounded-md">Phonetics:</mark>
                 </div>
             )}
-            <SaveModal isOpen={openSaveModal} onClose={() => setOpenSaveModal(false)} Name={recordingName}></SaveModal>
+            {selectedSession && (
+                <div className="mt-2">
+                    <button
+                        type="button"
+                        onClick={() => dispatch(clearSelectedSession())}
+                        className="text-[#4780CC] text-sm font-poppins underline hover:no-underline"
+                    >
+                        New recording
+                    </button>
+                </div>
+            )}
+            <SaveModal
+                isOpen={openSaveModal}
+                onClose={() => setOpenSaveModal(false)}
+                onSave={handleSaveSession}
+                Name={recordingName}
+            />
             </div>
             <div className="flex flex-col w-full justify-center items-center gap-3">
                 <h1 className='font-poppins text-gray-500 font-light text-[12px]'>note: Please only start recording after button turns red.</h1>
@@ -98,7 +146,7 @@ const Transcribe: React.FC = () => {
                 </div>
                 <button 
                     className="w-[75%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-between items-center hover:cursor-pointer transition active:delay-[500ms] hover:duration-300 hover:ease-in hover:bg-blue-700 active:duration-300 active:ease-in active:bg-red-500" 
-                    onMouseDown={handleStartRecording} 
+                    onMouseDown={handleStartRecordingWithClear} 
                     onMouseUp={handleRecordingStop}
                 >
                     <h2 className="text-white font-poppins text-[18px] font-semibold text-md mx-auto pl-[2vw]">Hold to Record</h2>
