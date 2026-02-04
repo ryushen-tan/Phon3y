@@ -20,10 +20,10 @@ const LandingPage: React.FC = () => {
               'linear-gradient(-85deg, rgb(95, 101, 255) 0%, #D5DAF0 70%, #B2C1D2 100%)'
           }}
         >
-          <div className="w-screen h-screen flex flex-col items-center">
+          <div className="relative w-screen h-screen flex flex-col items-center">
             <div className="absolute pointer-events-none z-[2] w-[98.5vw] h-screen bg-white opacity-[10%] rounded-[30px] border-2 border-white" />
-            <div className="absolute pointer-events-auto z-[2] w-[45.5vw] h-screen opacity-[20%] rounded-[30px] right-0">
-              <Spline scene="https://prod.spline.design/2hCFzkawcQb7Q0Cj/scene.splinecode" />
+            <img className="absolute left-1/2 top-1/2 z-[1] w-[1301px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" src="/background.png" alt="background 3D assets" />
+            <div className="absolute pointer-events-auto z-[2] w-[45.5vw] h-screen opacity-[60%] rounded-[30px] right-0">
               <div className="absolute bg-[#8187FC] w-[200px] h-[100px] bottom-0 right-0 rounded-[30px]" />
             </div>
             <div className="relative z-[1] flex justify-center items-center w-full h-full">
