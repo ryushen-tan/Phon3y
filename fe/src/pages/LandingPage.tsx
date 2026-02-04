@@ -1,6 +1,5 @@
 import Navbar from '../components/Navbar/Navbar';
 import ShinyText from '../components/Text/ShinyText';
-import Spline from '@splinetool/react-spline';
 import Footer from '../components/Footer/Footer';
 
 const LandingPage: React.FC = () => {
