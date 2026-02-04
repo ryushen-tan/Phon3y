@@ -7,168 +7,160 @@ import { addSession } from '../../store/sessionsSlice';
 import { clearSelectedSession } from '../../store/transcribeViewSlice';
 
 const Transcribe: React.FC = () => {
-    const dispatch = useDispatch<AppDispatch>();
-    const selectedSessionId = useSelector((state: RootState) => state.transcribeView.selectedSessionId);
-    const sessions = useSelector((state: RootState) => state.sessions);
-    const selectedSession = selectedSessionId ? sessions.find((s) => s.id === selectedSessionId) : null;
+  const dispatch = useDispatch<AppDispatch>();
+  const selectedSessionId = useSelector((state: RootState) => state.transcribeView.selectedSessionId);
+  const sessions = useSelector((state: RootState) => state.sessions);
+  const selectedSession = selectedSessionId ? sessions.find((s) => s.id === selectedSessionId) : null;
 
-    const { postAudio, transcription } = useAudioTranscription();
-    const { record, handleStartRecording, handleStopRecording } = useRecordingState();
-    const {
-        enableSave,
-        enableDelete,
-        recordingName,
-        setRecordingName,
-        openSaveModal,
-        setOpenSaveModal,
-        isEditing,
-        setIsEditing,
-        enableSaveOrDelete,
-        disableSaveOrDelete,
-        onDelete,
-        onSave
-    } = useTranscribeUI();
-    const { onData, onStop } = useRecordingActions(postAudio);
+  const { postAudio, transcription } = useAudioTranscription();
+  const { record, handleStartRecording, handleStopRecording } = useRecordingState();
+  const {
+    enableSave,
+    enableDelete,
+    recordingName,
+    setRecordingName,
+    openSaveModal,
+    setOpenSaveModal,
+    setIsEditing,
+    enableSaveOrDelete,
+    disableSaveOrDelete,
+    onDelete,
+    onSave,
+  } = useTranscribeUI();
+  const { onData, onStop } = useRecordingActions(postAudio);
 
-    const handleSaveSession = (data: { title: string; description: string; date: string }) => {
-        dispatch(addSession({
-            title: data.title,
-            description: data.description,
-            date: data.date,
-            transcribedText: transcription ?? '',
-        }));
-        setOpenSaveModal(false);
-        disableSaveOrDelete();
-        setRecordingName('untitled recording');
-    };
+  const handleSaveSession = (data: { title: string; description: string; date: string }) => {
+    dispatch(addSession({
+      title: data.title,
+      description: data.description,
+      date: data.date,
+      transcribedText: transcription ?? '',
+    }));
+    setOpenSaveModal(false);
+    disableSaveOrDelete();
+    setRecordingName('untitled recording');
+  };
 
-    const handleRecordingStop = () => {
-        handleStopRecording();
-        enableSaveOrDelete();
-    };
+  const handleRecordingStop = () => {
+    handleStopRecording();
+    enableSaveOrDelete();
+  };
 
-    const handleStartRecordingWithClear = () => {
-        dispatch(clearSelectedSession());
-        handleStartRecording();
-    };
+  const handleStartRecordingWithClear = () => {
+    dispatch(clearSelectedSession());
+    handleStartRecording();
+  };
 
-    const displayText = selectedSession ? selectedSession.transcribedText : (enableSave && enableDelete ? (transcription ?? 'loading...') : '');
+  const displayText = selectedSession ? selectedSession.transcribedText : (enableSave && enableDelete ? (transcription ?? 'loading...') : '');
 
-    return (
-        <div className="w-[45vw] h-[40vw] rounded-[20px] bg-[#FCFCFC]">
-            <div className="w-full h-[3.5vw] bg-[#C9DEFF] border-3 border-white border-b-0 rounded-t-[20px] flex items-center">
-                <input
-                    placeholder={selectedSession ? undefined : 'untitled recording'}
-                    value={selectedSession ? selectedSession.title : recordingName}
-                    readOnly={!!selectedSession}
-                    onChange={(e) => !selectedSession && setRecordingName(e.target.value)}
-                    onFocus={() => !selectedSession && setIsEditing(true)}
-                    className="text-[#4780CC] text-[18px] z-[1] focus:outline-none py-[1vw] pl-[2.8vw] w-[90%] placeholder:text-[#4780CC] bg-transparent"
-                />
-                {!selectedSession && (
-                <button 
-                    type="button" 
-                    onClick={() => document.querySelector('input')?.focus()}
-                    className="focus:outline-none ml-[-28.5vw]"
-                >
-                { !isEditing ? 
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.1123 4.95503L5.20978 13.8575C4.41478 14.66 2.03728 15.0275 1.45978 14.495C0.882284 13.9625 1.30227 11.585 2.09727 10.7825L10.9998 1.88005C11.4109 1.48856 11.9587 1.27328 12.5263 1.28019C13.0939 1.28711 13.6363 1.51568 14.0377 1.91708C14.4391 2.31848 14.6677 2.86091 14.6746 3.42852C14.6816 3.99614 14.4663 4.54397 14.0748 4.95503H14.1123Z" stroke="#7390B5" strokeLinecap="round" strokeLinejoin="round"/>
-                                <path d="M14.75 14.75H8" stroke="#4780CC" strokeLinecap="round" strokeLinejoin="round"/>
-                                </svg>
-                                :
-                                <div className="flex justify-center items-center" />}
+  return (
+    <div className="flex flex-col rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden min-w-[450px] max-w-[520px] h-[60vh]">
+      {/* Header */}
+      <div className="flex items-center gap-2 border-b border-gray-100 bg-gray-50/80 px-4 py-3">
+        <input
+          placeholder={selectedSession ? undefined : 'Untitled recording'}
+          value={selectedSession ? selectedSession.title : recordingName}
+          readOnly={!!selectedSession}
+          onChange={(e) => !selectedSession && setRecordingName(e.target.value)}
+          onFocus={() => !selectedSession && setIsEditing(true)}
+          className="flex-1 bg-transparent text-sm font-medium text-gray-900 placeholder:text-gray-400 focus:outline-none"
+        />
+        {!selectedSession && (
+          <button
+            type="button"
+            onClick={() => document.querySelector('input')?.focus()}
+            className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-600"
+            aria-label="Edit name"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M11.3 4.3L13.7 6.7 5 15.3 1.5 15.5 1.7 12 11.3 4.3z" />
+            </svg>
+          </button>
+        )}
+      </div>
 
-                </button>
-                )}
-            </div>
-            <div className="p-[3vw] text-lg text-[#4F4F4F] font-light w-full h-[28vw]">
-            {(selectedSession || enableSave && enableDelete) ? (
-                <div className='w-full h-full'>
-                    <mark className="bg-blue-200 px-1 text-[#2b2b2b] rounded-md">Phonetics:</mark> { displayText || 'loading...' }
-                </div>
-            ) : (
-                <div className='w-full h-full'>
-                    <mark className="bg-blue-200 px-1 text-[#2b2b2b] rounded-md">Phonetics:</mark>
-                </div>
-            )}
-            {selectedSession && (
-                <div className="mt-2">
-                    <button
-                        type="button"
-                        onClick={() => dispatch(clearSelectedSession())}
-                        className="text-[#4780CC] text-sm font-poppins underline hover:no-underline"
-                    >
-                        New recording
-                    </button>
-                </div>
-            )}
-            <SaveModal
-                isOpen={openSaveModal}
-                onClose={() => setOpenSaveModal(false)}
-                onSave={handleSaveSession}
-                Name={recordingName}
-            />
-            </div>
-            <div className="flex flex-col w-full justify-center items-center gap-3">
-                <h1 className='font-poppins text-gray-500 font-light text-[12px]'>note: Please only start recording after button turns red.</h1>
-                <Recorder
-                    className="hidden"
-                    record={record}
-                    onStop={onStop}
-                    echoCancellation={true}
-                    noiseSuppression={true}
-                    onData={onData}
-                />
-                <div className='w-full flex justify-center items-center gap-3'>
-                    {
-                        enableSave && enableDelete && (
-                            <div className="flex w-[75%] justify-between items-center">
-                                <button 
-                                    className="w-[45%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-center items-center hover:cursor-pointer transition hover:duration-300 hover:ease-in hover:bg-blue-700"
-                                    onClick={onSave}
-                                >
-                                    <h2 className="text-white font-poppins text-[18px] font-semibold text-md mx-auto">
-                                        Save
-                                    </h2>
-                                </button>
-                                <button 
-                                    className="w-[45%] bg-red-500 h-[2.5vw] rounded-full flex justify-center items-center hover:cursor-pointer transition hover:duration-300 hover:ease-in hover:bg-red-700"
-                                    onClick={onDelete}
-                                >
-                                    <h2 className="text-white font-poppins text-[18px] font-semibold text-md mx-auto">
-                                        Delete
-                                    </h2>
-                                </button>
-                            </div>
-                        )
-                    }
-                </div>
-                <button 
-                    className="w-[75%] bg-[#4780CC] h-[2.5vw] rounded-full flex justify-between items-center hover:cursor-pointer transition active:delay-[500ms] hover:duration-300 hover:ease-in hover:bg-blue-700 active:duration-300 active:ease-in active:bg-red-500" 
-                    onMouseDown={handleStartRecordingWithClear} 
-                    onMouseUp={handleRecordingStop}
-                >
-                    <h2 className="text-white font-poppins text-[18px] font-semibold text-md mx-auto pl-[2vw]">Hold to Record</h2>
-                    <div className="mr-4">
-                        <svg
-                            width="23"
-                            height="23"
-                            viewBox="0 0 23 23"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-                                stroke="white"
-                                strokeWidth="3.75"
-                            />
-                        </svg>
-                    </div>
-                </button>
-            </div>
+      {/* Phonetics content */}
+      <div className="flex flex-1 flex-col p-4 min-h-[200px]">
+        <div className="mb-2 flex items-center gap-2">
+          <span className="rounded bg-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-700">Phonetics</span>
         </div>
-    );
+        <div className="min-h-[320px] rounded-lg border border-gray-100 bg-gray-50/50 p-3 text-sm text-gray-700 leading-relaxed">
+          {(selectedSession || (enableSave && enableDelete)) ? (displayText || 'Processing…') : 'Record to see transcription here.'}
+        </div>
+        {selectedSession && (
+          <button
+            type="button"
+            onClick={() => dispatch(clearSelectedSession())}
+            className="mt-3 text-sm font-medium text-indigo-600 hover:text-indigo-700"
+          >
+            ← New recording
+          </button>
+        )}
+      </div>
+
+      {/* Actions */}
+      <div className="flex flex-col gap-3 border-t border-gray-100 bg-gray-50/50 p-4">
+        {enableSave && enableDelete && (
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={onSave}
+              className="flex-1 rounded-lg bg-indigo-600 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-700"
+            >
+              Save recording
+            </button>
+            <button
+              type="button"
+              onClick={onDelete}
+              className="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+            >
+              Discard
+            </button>
+          </div>
+        )}
+        <div className="flex flex-col items-center gap-2">
+          <p className="text-xs text-gray-500">Hold the button to record. Release when done.</p>
+          <button
+            type="button"
+            onMouseDown={handleStartRecordingWithClear}
+            onMouseUp={handleRecordingStop}
+            className={`flex w-full max-w-[280px] items-center justify-center gap-2 rounded-xl py-3.5 font-medium transition-all ${
+              record
+                ? 'bg-red-500 text-white shadow-lg scale-[1.02]'
+                : 'bg-indigo-600 text-white shadow-md hover:bg-indigo-700'
+            }`}
+          >
+            {record ? (
+              <>Recording…</>
+            ) : (
+              <>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+                  <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+                </svg>
+                Hold to record
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+
+      <SaveModal
+        isOpen={openSaveModal}
+        onClose={() => setOpenSaveModal(false)}
+        onSave={handleSaveSession}
+        Name={recordingName}
+      />
+      <Recorder
+        className="hidden"
+        record={record}
+        onStop={onStop}
+        echoCancellation={true}
+        noiseSuppression={true}
+        onData={onData}
+      />
+    </div>
+  );
 };
 
 export default Transcribe;

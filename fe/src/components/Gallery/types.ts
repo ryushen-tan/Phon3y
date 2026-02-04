@@ -3,4 +3,6 @@ export interface GalleryCardProps {
     date: string;
     description: string;
     onClick?: () => void;
+    onDelete?: (e?: React.MouseEvent) => void;
+    isSelected?: boolean;
 }

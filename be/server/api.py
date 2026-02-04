@@ -47,17 +47,22 @@ def transcribe_audio():
 
     return jsonify({"transcription": transcription})
 
+LOCAL_SERVER_URL = "http://127.0.0.1:5000"
+
+
 @app.route('/get-ngrok-url', methods=['GET'])
 def get_ngrok_url():
-    """Fetches the public Ngrok URL dynamically"""
+    """Fetches the public Ngrok URL dynamically. Falls back to local server if ngrok is not running."""
     try:
         public_url = fetch_public_url()
-        if not public_url:
-            return jsonify({"error": "No active Ngrok tunnels found"}), 404
-        return jsonify({"ngrok_url": public_url})
+        if public_url:
+            return jsonify({"ngrok_url": public_url})
+        # No tunnels found
+        return jsonify({"ngrok_url": LOCAL_SERVER_URL})
     except NgrokError as e:
-        app.logger.exception("Ngrok API fetch failed")
-        return jsonify({"error": f"Failed to fetch Ngrok URL: {str(e)}"}), 500
+        # Ngrok not running (e.g. connection refused on 4040) -> use local URL so app works without ngrok
+        app.logger.warning("Ngrok unavailable, using local URL: %s", e)
+        return jsonify({"ngrok_url": LOCAL_SERVER_URL})
 
 
 @app.route('/mouth/track', methods=['POST'])

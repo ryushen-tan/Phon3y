@@ -8,10 +8,10 @@ class NgrokError(Exception):
     pass
 
 
-def fetch_public_url(timeout: float = 5.0) -> Optional[str]:
+def fetch_public_url(timeout: float = 2.0) -> Optional[str]:
     """Return the public ngrok URL if an active tunnel is present, otherwise None.
 
-    Raises NgrokError for request-level failures.
+    Raises NgrokError for request-level failures (caller can fall back to local URL).
     """
     try:
         resp = requests.get(NGROK_API, timeout=timeout)

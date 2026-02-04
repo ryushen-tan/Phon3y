@@ -1,81 +1,70 @@
 import Navbar from '../components/Navbar/Navbar';
-import DashboardRow from '../components/Dashboard/DashboardRow';
 import GalleryCard from '../components/Gallery/GalleryCard';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../store/store';
 import { setSelectedSession } from '../store/transcribeViewSlice';
+import { removeSession } from '../store/sessionsSlice';
 
 const Dashboard = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const sessions = useSelector((state: RootState) => state.sessions);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const sessions = useSelector((state: RootState) => state.sessions);
 
-    const handleSelectSession = (sessionId: string) => {
-        dispatch(setSelectedSession(sessionId));
-        navigate('/transcribe');
-    };
+  const handleSelectSession = (sessionId: string) => {
+    dispatch(setSelectedSession(sessionId));
+    navigate('/transcribe');
+  };
 
-    return (
-        <>
-            <Navbar />
-            <div 
-                className='w-screen h-screen'
-                style={{
-                    backgroundImage:
-                        'linear-gradient(-135deg, #8B9CFF 0%, #D5DAF0 50%, #B2C1D2 100%)'
-                }}
-            >
-                <div
-                    className="flex w-screen h-[28vw] gap-5 justify-center items-center"
-                >
-                    <div>
-                        <div className="absolute left-10 bottom-10 w-[63vw] h-[38vw] bg-black/10 bg-blur-xl rounded-[30px] border-2 border-white backdrop-blur-xl flex flex-col justify-center items-center fade-in overflow-auto p-4">
-                            <DashboardRow profilePicture="">
-                                <div className="w-full flex flex-wrap gap-3 justify-center">
-                                    {sessions.length === 0 ? (
-                                        <p className="text-white/80 font-poppins text-sm">No previous sessions yet. Start a recording and save to see them here.</p>
-                                    ) : (
-                                        sessions.map((session) => (
-                                            <GalleryCard
-                                                key={session.id}
-                                                title={session.title}
-                                                date={session.date}
-                                                description={session.transcribedText || session.description}
-                                                onClick={() => handleSelectSession(session.id)}
-                                            />
-                                        ))
-                                    )}
-                                </div>
-                            </DashboardRow>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="absolute right-10 bottom-10 w-[30vw] h-[38vw] bg-black/10 bg-blur-xl rounded-[30px] border-2 border-white backdrop-blur-xl flex flex-col justify-center items-center fade-in">
-                            <div 
-                                className='w-full h-[50%] p-5'
-                            >
-                                <Link 
-                                    to="/transcribe"
-                                >
-                                    <button
-                                        className='w-full p-2 h-[40px] border-2 border-white rounded-[10px] text-white font-poppins font-semibold hover:cursor-pointer hover:opacity-[80%]'
-                                    >
-                                        New Patient
-                                    </button>
-                                </Link>
-                            </div>
-                            <div 
-                                className='w-full h-[50%]'
-                            >
+  const handleDeleteSession = (sessionId: string) => {
+    dispatch(removeSession(sessionId));
+  };
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gray-50">
+        <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h1 className="text-xl font-semibold text-gray-900">Sessions</h1>
+              <p className="mt-0.5 text-sm text-gray-500">Your saved recordings.</p>
             </div>
-        </>
-    );
+            <Link
+              to="/transcribe"
+              className="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-700"
+            >
+              New recording
+            </Link>
+          </div>
+          {sessions.length === 0 ? (
+            <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 bg-white py-16 text-center">
+              <p className="text-sm text-gray-500">No sessions yet. Start a recording and save to see them here.</p>
+              <Link
+                to="/transcribe"
+                className="mt-4 text-sm font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Go to transcription →
+              </Link>
+            </div>
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {sessions.map((session) => (
+                <GalleryCard
+                  key={session.id}
+                  title={session.title}
+                  date={session.date}
+                  description={session.transcribedText || session.description}
+                  onClick={() => handleSelectSession(session.id)}
+                  onDelete={() => handleDeleteSession(session.id)}
+                />
+              ))}
+            </div>
+          )}
+        </main>
+      </div>
+    </>
+  );
 };
 
 export default Dashboard;

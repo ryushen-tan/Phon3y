@@ -1,12 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
-.font-poppins {
-    font-family: 'Poppins', sans-serif;
+/* Design tokens – professional palette */
+:root {
+    --color-primary: 99 102 241;       /* indigo-500 */
+    --color-primary-hover: 79 70 229;   /* indigo-600 */
+    --color-surface: 249 250 251;      /* gray-50 */
+    --color-surface-elevated: 255 255 255;
+    --color-border: 229 231 235;      /* gray-200 */
+    --color-text: 17 24 39;            /* gray-900 */
+    --color-text-muted: 107 114 128;   /* gray-500 */
+    --color-accent-soft: 238 242 255;  /* indigo-50 */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
-body{
-    font-family: 'Poppins', sans-serif;
+.font-poppins { font-family: 'Poppins', sans-serif; }
+.font-inter { font-family: 'Inter', sans-serif; }
+
+body {
+    font-family: 'Inter', 'Poppins', system-ui, sans-serif;
+    color: rgb(var(--color-text));
+    -webkit-font-smoothing: antialiased;
 }
 
 @font-face {
